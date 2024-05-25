@@ -9,7 +9,7 @@ function Login() {
             <div className="App">
                 <nav className="navbar navbar-expand-lg navbar-light bg-light">
                     <div className="container-fluid">
-                        <a className="navbar-brand" href="#">
+                        <a className="navbar-brand" href="/">
                             <img src={Logo} alt="" width="60" height="60" />
                         </a>
                         <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -18,11 +18,11 @@ function Login() {
                         <div className="collapse navbar-collapse" id="navbarSupportedContent">
                             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                                 <li className="nav-item">
-                                    <a className="nav-link active rounded text-center" href="#"><button className="btn btn-outline-primary btn-sm d-block w-100">Criar uma conta</button></a>
+                                    <a className="nav-link active rounded text-center" href="/cad/nova/conta"><button className="btn btn-outline-primary btn-sm d-block w-100">Criar uma conta</button></a>
 
                                 </li>
                                 <li className="nav-item">
-                                    <a className="nav-link active rounded text-center" href="#"><button className="btn btn-outline-secondary btn-sm d-block w-100">Mais sobre o FIG</button></a>
+                                    <a className="nav-link active rounded text-center" href="#infoFIG"><button className="btn btn-outline-secondary btn-sm d-block w-100">Mais sobre o FIG</button></a>
                                 </li>
                             </ul>
                         </div>
@@ -30,9 +30,9 @@ function Login() {
                 </nav>
             </div>
 
-            <div className="container">
+            <div className="container  mt-5">
                 <div className="row">
-                    <div className="col-sm col-lg-9 col-md-10 mt-5 mx-auto">
+                    <div className="col-sm col-lg-9 col-md-10 mx-auto">
                         <div className="card">
 
                             <div className="card-body">
@@ -58,9 +58,9 @@ function Login() {
                                                     <label className="form-check-label" >Salvar Login</label>
                                                 </div>
                                                 <br />
-                                                <button type="submit" className="w-50 d-block m-auto btn btn-outline-primary btn-sm">Entrar<i className="bi bi-box-arrow-in-right ms-2"></i></button>
+                                                <button type="submit" className="w-75 d-block m-auto btn btn-outline-primary btn-sm">Entrar<i className="bi bi-box-arrow-in-right ms-2"></i></button>
                                                 <br />
-                                                <div className="form-check mt-2 text-center">
+                                                <div className="text-center">
                                                     <a href="#" className="link-danger text-center">Esqueci minha senha</a>
                                                 </div>
                                             </form>
@@ -74,9 +74,9 @@ function Login() {
             </div>
 
 
-            <div className="container">
+            <div className="container mt-5">
                 <div className="row">
-                    <div className="col-sm col-lg-9 col-md-10 mt-5 mx-auto">
+                    <div className="col-sm col-lg-9 col-md-10 mx-auto">
                         <div className="card">
                             <div className="card-header">
                                 Ultimas Anotações 24/05/2024
@@ -93,9 +93,22 @@ function Login() {
                 </div>
             </div>
 
-            <div className="container">
+            <div className="container mt-5" id="infoFIG">
                 <div className="row">
-                    <div className="col-sm col-lg-9 col-md-10 mt-5 mx-auto">
+                    <div className="col-sm col-md col-lg">
+                        <p className="text-center">O FIG foi planejado para simplificar e otimizar a gestão de tarefas tanto para negócios quanto para a vida pessoal. Com ferramentas essenciais para o cadastro de clientes, controle de caixa e organização de agendas, ele oferece uma interface intuitiva e funcionalidades avançadas que aumentam a eficiência,
+                            melhoram a satisfação dos clientes e promovem um equilíbrio saudável entre vida pessoal e profissional.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div className="container mt-5">
+                <div className="row">
+                    <div className="col-sm col-md col-lg">
+                        <h4 className="text-center">Principais Funcionalidades</h4>
+                    </div>
+                    <div className="w-100"></div>
+                    <div className="col-sm col-lg-9 col-md-10 mx-auto">
                         <div className="row">
                             <div className="col-4">
                                 <div className="list-group" id="list-tab" role="tablist">
@@ -140,6 +153,16 @@ function Login() {
                     </div>
                 </div>
             </div>
+
+            <div className="container mt-5">
+                <div className="row">
+                    <div className="col-sm col-md col-lg">
+                        <p className="text-center">Nosso aplicativo é a ferramenta ideal para quem busca melhorar a gestão do seu negócio e da sua vida pessoal,
+                            aumentando a produtividade e proporcionando uma experiência superior tanto para gestores quanto para indivíduos.</p>
+                    </div>
+                </div>
+            </div>
+
             <Footer />
         </div>
     )
