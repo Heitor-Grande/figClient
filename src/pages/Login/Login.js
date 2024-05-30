@@ -84,8 +84,8 @@ function Login() {
                             <div className="card-body">
 
                                 <ul>
-                                    <li>fazer a proposta do fig</li>
-                                    <li>Fazer a tela de cadastro de conta</li>
+                                    <li>Fazer o recebimento do JWT para as telas publicas</li>
+                                    <li>Fazer o cadastro do usuario no banco</li>
                                 </ul>
                             </div>
                         </div>
