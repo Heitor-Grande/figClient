@@ -1,7 +1,21 @@
 import Logo from "../../assets/logo192.png"
 import Footer from "../../components/footer"
+import { useEffect } from "react"
+import TokenPublic from "../../functions/tokenPublic"
+import { toast } from "react-toastify"
 
 function Login() {
+
+    useEffect(function () {
+
+        TokenPublic().then(function () {
+
+
+        }).catch(function (erro) {
+
+            toast.error(erro.response.data || erro.message || erro.statusText)
+        })
+    }, [])
 
     return (
         <div className="main">
