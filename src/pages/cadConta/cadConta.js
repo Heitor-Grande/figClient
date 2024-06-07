@@ -1,12 +1,10 @@
 import Logo from "../../assets/logo192.png"
 import Footer from "../../components/footer"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import TokenPublic from "../../functions/tokenPublic"
 import { toast } from "react-toastify"
 
 function CadConta() {
-
-
 
     useEffect(function () {
 
@@ -19,7 +17,15 @@ function CadConta() {
         })
     }, [])
 
+    const [nome, setNome] = useState("")
+    const [senha, setSenha] = useState("")
+    const [senhaConfirmar, setSenhaConfirmar] = useState("")
+    const [email, setEmail] = useState("")
 
+    function criarPreCad(){
+
+
+    }
 
     return (
         <>
@@ -56,40 +62,53 @@ function CadConta() {
 
             <div className="card mt-5 w-75 m-auto">
                 <div className="card-body">
-                    <div className="container">
-                        <div className="row">
-                            <div className="col-sm col-md-5 col-lg-3">
-                                <div className="form-group">
-                                    <label>Nome</label>
-                                    <input type="email" className="form-control form-control-sm text-capitalize" placeholder="Nome completo" />
+                    <form onSubmit={function(event){
+                        event.preventDefault()
+                        criarPreCad()
+                    }}>
+                        <div className="container">
+                            <div className="row">
+                                <div className="col-sm col-md-5 col-lg-3">
+                                    <div className="form-group">
+                                        <label>Nome</label>
+                                        <input type="text" value={nome} onChange={function (event) {
+                                            setNome(event.target.value)
+                                        }} className="form-control form-control-sm text-capitalize" placeholder="Nome completo" />
+                                    </div>
                                 </div>
-                            </div>
-                            <div className="col-sm col-md-7 col-lg-3">
-                                <div className="form-group">
-                                    <label>Email</label>
-                                    <input type="email" className="form-control form-control-sm" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="exemplo@email.com" />
+                                <div className="col-sm col-md-7 col-lg-3">
+                                    <div className="form-group">
+                                        <label>Email</label>
+                                        <input type="email" value={email} onChange={function (event) {
+                                            setEmail(event.target.value)
+                                        }} className="form-control form-control-sm" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="exemplo@email.com" />
+                                    </div>
                                 </div>
-                            </div>
-                            <div className="col-sm col-md-6 col-lg-3">
-                                <div className="form-group">
-                                    <label>Senha</label>
-                                    <input type="password" className="form-control form-control-sm" placeholder="*******" />
+                                <div className="col-sm col-md-6 col-lg-3">
+                                    <div className="form-group">
+                                        <label>Senha</label>
+                                        <input type="password" value={senha} onChange={function (event) {
+                                            setSenha(event.target.value)
+                                        }} className="form-control form-control-sm" placeholder="*******" />
+                                    </div>
                                 </div>
-                            </div>
-                            <div className="col-sm col-md-6 col-lg-3">
-                                <div className="form-group">
-                                    <label>Confirmar Senha</label>
-                                    <input type="password" className="form-control form-control-sm" placeholder="*******" />
+                                <div className="col-sm col-md-6 col-lg-3">
+                                    <div className="form-group">
+                                        <label>Senha</label>
+                                        <input type="password" value={senhaConfirmar} onChange={function (event) {
+                                            setSenhaConfirmar(event.target.value)
+                                        }} className="form-control form-control-sm" placeholder="*******" />
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </form>
                 </div>
                 <div className="card-footer">
                     <div className="container">
                         <div className="row">
                             <div className="col-sm col-md col-lg-6 text-center m-auto">
-                                <button className="btn btn-outline-primary btn-sm w-100">Finalizar Pré-Cadastro</button>
+                                <button type="submit" className="btn btn-outline-primary btn-sm w-100">Finalizar Pré-Cadastro</button>
                             </div>
                         </div>
                     </div>

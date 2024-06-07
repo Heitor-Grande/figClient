@@ -98,7 +98,7 @@ function Login() {
                             <div className="card-body">
 
                                 <ul>
-                                    <li>Fazer o recebimento do JWT para as telas publicas</li>
+                                    <li>Fazer modal de LOADING</li>
                                     <li>Fazer o cadastro do usuario no banco</li>
                                 </ul>
                             </div>
