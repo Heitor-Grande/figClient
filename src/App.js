@@ -8,7 +8,9 @@ import CadConta from "./pages/cadConta/cadConta";
 function App() {
   return (
     <>
-      <ToastContainer />
+      <ToastContainer
+        autoClose={2000}
+      />
       <BrowserRouter>
 
         <Routes>

@@ -35,6 +35,7 @@ function CadConta() {
 
     function criarPreCad() {
 
+        setCarregando(true)
         try {
 
             const dados = {
@@ -50,16 +51,24 @@ function CadConta() {
                     headers: {
                         Authorization: token
                     }
-                }).then(function () {
+                }).then(function (resposta) {
 
+                    setCarregando(false)
+                    setNome("")
+                    setSenha("")
+                    setSenhaConfirmar("")
+                    setEmail("")
 
+                    toast.success(resposta.data)
                 }).catch(function (error) {
 
+                    setCarregando(false)
                     toast.error(error.response.data || error.statusText || error.message)
                 })
             }
             else {
 
+                setCarregando(false)
                 toast.info("As senhas não são idênticas.")
             }
         } catch (error) {
