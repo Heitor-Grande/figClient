@@ -17,7 +17,7 @@ function CadConta() {
             TokenPublic().then(function () {
 
 
-                setCarregando(false)
+               
             }).catch(function (erro) {
 
                 setCarregando(false)
