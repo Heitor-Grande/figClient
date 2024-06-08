@@ -3,18 +3,27 @@ import Footer from "../../components/footer"
 import { useEffect } from "react"
 import TokenPublic from "../../functions/tokenPublic"
 import { toast } from "react-toastify"
+import ModalLoad from "../../components/ModalLoad"
+import { useState } from 'react';
 
 function Login() {
 
+    const [carregando, setCarregando] = useState(false)
     useEffect(function () {
 
-        TokenPublic().then(function () {
+
+        if (!sessionStorage.getItem("tokenPublic")) {
+            setCarregando(true)
+            TokenPublic().then(function () {
 
 
-        }).catch(function (erro) {
+                setCarregando(false)
+            }).catch(function (erro) {
 
-            toast.error(erro.response.data || erro.message || erro.statusText)
-        })
+                setCarregando(false)
+                toast.error(erro.response.data || erro.message || erro.statusText)
+            })
+        }
     }, [])
 
     return (
@@ -176,7 +185,7 @@ function Login() {
                     </div>
                 </div>
             </div>
-
+            <ModalLoad carregando={carregando} />
             <Footer />
         </div>
     )
