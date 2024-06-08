@@ -4,10 +4,12 @@ import { useEffect, useState } from "react"
 import TokenPublic from "../../functions/tokenPublic"
 import { toast } from "react-toastify"
 import ModalLoad from "../../components/ModalLoad"
+import axios from "axios"
 
 
 function CadConta() {
 
+    const token = sessionStorage.getItem("tokenPublic")
     const [carregando, setCarregando] = useState(false)
     useEffect(function () {
 
@@ -33,7 +35,37 @@ function CadConta() {
 
     function criarPreCad() {
 
+        try {
 
+            const dados = {
+                nome,
+                senha,
+                senhaConfirmar,
+                email
+            }
+
+            if (senha == senhaConfirmar) {
+
+                axios.post(process.env.REACT_APP_API_URL + "/criar/novo/precad", dados, {
+                    headers: {
+                        Authorization: token
+                    }
+                }).then(function () {
+
+
+                }).catch(function (error) {
+
+                    toast.error(error.response.data || error.statusText || error.message)
+                })
+            }
+            else {
+
+                toast.info("As senhas não são idênticas.")
+            }
+        } catch (error) {
+
+            toast.error(error.message || "Ocorreu um erro ao realizar pré-cadastro.")
+        }
     }
 
     return (
@@ -68,19 +100,18 @@ function CadConta() {
                     </div>
                 </div>
             </div>
-
             <div className="card mt-5 w-75 m-auto">
-                <div className="card-body">
-                    <form onSubmit={function (event) {
-                        event.preventDefault()
-                        criarPreCad()
-                    }}>
+                <form onSubmit={function (event) {
+                    event.preventDefault()
+                    criarPreCad()
+                }}>
+                    <div className="card-body">
                         <div className="container">
                             <div className="row">
                                 <div className="col-sm col-md-5 col-lg-3">
                                     <div className="form-group">
                                         <label>Nome</label>
-                                        <input type="text" value={nome} onChange={function (event) {
+                                        <input type="text" required value={nome} onChange={function (event) {
                                             setNome(event.target.value)
                                         }} className="form-control form-control-sm text-capitalize" placeholder="Nome completo" />
                                     </div>
@@ -88,7 +119,7 @@ function CadConta() {
                                 <div className="col-sm col-md-7 col-lg-3">
                                     <div className="form-group">
                                         <label>Email</label>
-                                        <input type="email" value={email} onChange={function (event) {
+                                        <input type="email" required value={email} onChange={function (event) {
                                             setEmail(event.target.value)
                                         }} className="form-control form-control-sm" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="exemplo@email.com" />
                                     </div>
@@ -96,7 +127,7 @@ function CadConta() {
                                 <div className="col-sm col-md-6 col-lg-3">
                                     <div className="form-group">
                                         <label>Senha</label>
-                                        <input type="password" value={senha} onChange={function (event) {
+                                        <input type="password" required value={senha} onChange={function (event) {
                                             setSenha(event.target.value)
                                         }} className="form-control form-control-sm" placeholder="*******" />
                                     </div>
@@ -104,25 +135,25 @@ function CadConta() {
                                 <div className="col-sm col-md-6 col-lg-3">
                                     <div className="form-group">
                                         <label>Senha</label>
-                                        <input type="password" value={senhaConfirmar} onChange={function (event) {
+                                        <input type="password" required value={senhaConfirmar} onChange={function (event) {
                                             setSenhaConfirmar(event.target.value)
                                         }} className="form-control form-control-sm" placeholder="*******" />
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </form>
-                </div>
-                <div className="card-footer">
-                    <div className="container">
-                        <div className="row">
-                            <div className="col-sm col-md col-lg-6 text-center m-auto">
-                                <button type="submit" className="btn btn-outline-primary btn-sm w-100">Finalizar Pré-Cadastro</button>
+                    </div>
+                    <div className="card-footer">
+                        <div className="container">
+                            <div className="row">
+                                <div className="col-sm col-md col-lg-6 text-center m-auto">
+                                    <button type="submit" className="btn btn-outline-primary btn-sm w-100">Finalizar Pré-Cadastro</button>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
+                </form>
+            </div >
 
             <ModalLoad carregando={carregando} />
             <Footer />
