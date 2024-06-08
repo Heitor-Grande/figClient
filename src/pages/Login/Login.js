@@ -102,13 +102,13 @@ function Login() {
                     <div className="col-sm col-lg-9 col-md-10 mx-auto">
                         <div className="card">
                             <div className="card-header">
-                                Ultimas Anotações 24/05/2024
+                                Ultimas Anotações 08/06/2024
                             </div>
                             <div className="card-body">
 
                                 <ul>
-                                    <li>Fazer modal de LOADING</li>
-                                    <li>Fazer o cadastro do usuario no banco</li>
+                                    <li>fazer login</li>
+                                    <li>fazer recuperação de senha</li>
                                 </ul>
                             </div>
                         </div>

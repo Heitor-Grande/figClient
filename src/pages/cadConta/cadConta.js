@@ -5,11 +5,13 @@ import TokenPublic from "../../functions/tokenPublic"
 import { toast } from "react-toastify"
 import ModalLoad from "../../components/ModalLoad"
 import axios from "axios"
-
+import { useNavigate } from "react-router-dom"
 
 function CadConta() {
 
+    const navigate = useNavigate("/")
     const token = sessionStorage.getItem("tokenPublic")
+
     const [carregando, setCarregando] = useState(false)
     useEffect(function () {
 
@@ -64,6 +66,12 @@ function CadConta() {
 
                     setCarregando(false)
                     toast.error(error.response.data || error.statusText || error.message)
+                    if (error.response.status == 400) {
+
+                        setTimeout(() => {
+                            navigate("/")
+                        }, 1000);
+                    }
                 })
             }
             else {
