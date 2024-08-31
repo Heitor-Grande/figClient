@@ -137,9 +137,7 @@ function Login() {
                                 Ultimas Anotações 08/06/2024
                             </div>
                             <div className="card-body">
-
                                 <ul>
-                                    <li>fazer login</li>
                                     <li>fazer recuperação de senha</li>
                                 </ul>
                             </div>

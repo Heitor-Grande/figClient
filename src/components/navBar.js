@@ -1,7 +1,29 @@
+import { useEffect, useState } from "react"
+import ModalLoad from "./ModalLoad"
+import axios from 'axios'
+import { useNavigate } from "react-router-dom"
 function NavBar() {
-
+    const [showModalCarregando, setShowModalCarregando] = useState(false)
+    const navigate = useNavigate()
+    function VerificaLogin() {
+        setShowModalCarregando(true)
+        const tokenLogin = sessionStorage.getItem("tokenLogin") || localStorage.getItem("tokenLogin")
+        axios.get(`${process.env.REACT_APP_API_URL}/verifica/login/usuario`, {
+            headers: {
+                Authorization: tokenLogin
+            }
+        }).then(function (resposta) {
+            setShowModalCarregando(false)
+        }).catch(function (erro) {
+            navigate("/")
+        })
+    }
+    useEffect(function () {
+        VerificaLogin()
+    }, [])
     return (
         <div className="App">
+            <ModalLoad carregando={showModalCarregando} />
             <nav className="navbar navbar-expand-lg navbar-light bg-light">
                 <div className="container-fluid">
                     <a className="navbar-brand" href="#">FIG</a>
