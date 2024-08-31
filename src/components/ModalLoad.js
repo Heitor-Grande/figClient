@@ -1,17 +1,15 @@
 import React from 'react';
-
+import Modal from 'react-bootstrap/Modal';
 function ModalLoad({ carregando = false, mensagem = "Carregando..." }) {
     return (
-        <div className='position-fixed top-50 start-50 translate-middle w-100 h-100 bg-light' hidden={!carregando}>
-            <div className="card w-50 m-auto top-50">
-                <div className='card-body'>
-                    <div className="d-flex justify-content-center">
-                        <div className="spinner-border" role="status"></div>
-                    </div>
-                    <p className='text-center m-0 p-0'>{mensagem}</p>
+        <Modal show={carregando} centered size="sm">
+            <Modal.Body>
+                <div className="d-flex justify-content-center">
+                    <div className="spinner-border" role="status"></div>
                 </div>
-            </div>
-        </div>
+                <p className='text-center m-0 p-0'>{mensagem}</p>
+            </Modal.Body>
+        </Modal>
     );
 }
 

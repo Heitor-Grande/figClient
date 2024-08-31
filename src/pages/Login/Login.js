@@ -5,27 +5,59 @@ import TokenPublic from "../../functions/tokenPublic"
 import { toast } from "react-toastify"
 import ModalLoad from "../../components/ModalLoad"
 import { useState } from 'react';
+import axios from "axios"
+import { useNavigate } from "react-router-dom"
 
 function Login() {
-
+    const navigate = useNavigate()
     const [carregando, setCarregando] = useState(false)
+    const [inputsLogin, setInputslogin] = useState({
+        senha: "",
+        email: "",
+        salvarLogin: false
+    })
+    function onChangeInputLoginEmail(obj) {
+        setInputslogin({ ...inputsLogin, email: obj.target.value })
+    }
+    function onChangeInputLoginSenha(obj) {
+        setInputslogin({ ...inputsLogin, senha: obj.target.value })
+    }
+    function onChangeInputLoginSalvarLogin(obj) {
+        setInputslogin({ ...inputsLogin, salvarLogin: obj.target.checked })
+    }
     useEffect(function () {
-
-
         if (!sessionStorage.getItem("tokenPublic")) {
             setCarregando(true)
             TokenPublic().then(function () {
-
-
                 setCarregando(false)
             }).catch(function (erro) {
-
                 setCarregando(false)
                 toast.error(erro.response.data || erro.message || erro.statusText)
             })
         }
     }, [])
-
+    function FazerLogin(eventoSubmit) {
+        eventoSubmit.preventDefault()
+        setCarregando(true)
+        axios.post(`${process.env.REACT_APP_API_URL}/realizar/login`, inputsLogin, {
+            headers: {
+                Authorization: sessionStorage.getItem("tokenPublic")
+            }
+        }).then(function (resposta) {
+            const tokenLogin = resposta.data.tokenLogin
+            if(inputsLogin.salvarLogin){
+                localStorage.setItem("tokenLogin", tokenLogin)
+            }
+            else{
+                sessionStorage.setItem("tokenLogin", tokenLogin)
+            }
+            navigate("/home/principal")
+            setCarregando(false)
+        }).catch(function (erro) {
+            toast.error(erro.response.data.message || erro.message || erro.statusText)
+            setCarregando(false)
+        })
+    }
     return (
         <div className="main">
 
@@ -66,18 +98,18 @@ function Login() {
                                             <img src={Logo} className="rounded h-50 d-inline-block" alt="..." />
                                         </div>
                                         <div className="col-sm col-md col-lg">
-                                            <form>
+                                            <form onSubmit={FazerLogin}>
                                                 <div className="form-group">
                                                     <label>Email</label>
-                                                    <input type="email" className="form-control form-control-sm" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="exemplo@email.com" />
+                                                    <input type="email" value={inputsLogin.email} onChange={onChangeInputLoginEmail} className="form-control form-control-sm" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="exemplo@email.com" />
                                                     <small id="emailHelp" className="form-text text-muted">Nunca compartilhe essas informações.</small>
                                                 </div>
                                                 <div className="form-group mt-2">
                                                     <label >Senha</label>
-                                                    <input type="password" className="form-control form-control-sm" id="exampleInputPassword1" placeholder="*******" />
+                                                    <input type="password" value={inputsLogin.senha} onChange={onChangeInputLoginSenha} className="form-control form-control-sm" id="exampleInputPassword1" placeholder="*******" />
                                                 </div>
                                                 <div className="form-check mt-2">
-                                                    <input type="checkbox" className="form-check-input" id="exampleCheck1" />
+                                                    <input type="checkbox" onChange={onChangeInputLoginSalvarLogin} checked={inputsLogin.salvarLogin} className="form-check-input" id="exampleCheck1" />
                                                     <label className="form-check-label" >Salvar Login</label>
                                                 </div>
                                                 <br />

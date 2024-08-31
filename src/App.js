@@ -4,6 +4,7 @@ import Login from "./pages/Login/Login";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import CadConta from "./pages/cadConta/cadConta";
+import Principal from "./pages/menuPrincipal/principal";
 
 function App() {
   return (
@@ -15,7 +16,7 @@ function App() {
 
         <Routes>
           <Route path="/home" element={<MainPage />}>
-
+            <Route path="/home/principal" element={<Principal />} />
           </Route>
 
           <Route path="/" element={<Login />} />

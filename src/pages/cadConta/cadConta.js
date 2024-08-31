@@ -8,19 +8,13 @@ import axios from "axios"
 import { useNavigate } from "react-router-dom"
 
 function CadConta() {
-
     const navigate = useNavigate("/")
     const token = sessionStorage.getItem("tokenPublic")
-
     const [carregando, setCarregando] = useState(false)
     useEffect(function () {
-
-
         if (!sessionStorage.getItem("tokenPublic")) {
             setCarregando(true)
             TokenPublic().then(function () {
-
-
                 setCarregando(false)
             }).catch(function (erro) {
 
@@ -29,45 +23,35 @@ function CadConta() {
             })
         }
     }, [])
-
     const [nome, setNome] = useState("")
     const [senha, setSenha] = useState("")
     const [senhaConfirmar, setSenhaConfirmar] = useState("")
     const [email, setEmail] = useState("")
-
     function criarPreCad() {
-
         setCarregando(true)
         try {
-
             const dados = {
                 nome,
                 senha,
                 senhaConfirmar,
                 email
             }
-
             if (senha == senhaConfirmar) {
-
                 axios.post(process.env.REACT_APP_API_URL + "/criar/novo/precad", dados, {
                     headers: {
                         Authorization: token
                     }
                 }).then(function (resposta) {
-
                     setCarregando(false)
                     setNome("")
                     setSenha("")
                     setSenhaConfirmar("")
                     setEmail("")
-
                     toast.success(resposta.data)
                 }).catch(function (error) {
-
                     setCarregando(false)
                     toast.error(error.response.data || error.statusText || error.message)
                     if (error.response.status == 400) {
-
                         setTimeout(() => {
                             navigate("/")
                         }, 1000);
@@ -75,7 +59,6 @@ function CadConta() {
                 })
             }
             else {
-
                 setCarregando(false)
                 toast.info("As senhas não são idênticas.")
             }
@@ -84,7 +67,6 @@ function CadConta() {
             toast.error(error.message || "Ocorreu um erro ao realizar pré-cadastro.")
         }
     }
-
     return (
         <>
 
