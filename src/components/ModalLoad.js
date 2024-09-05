@@ -1,6 +1,6 @@
 import React from 'react';
 import Modal from 'react-bootstrap/Modal';
-function ModalLoad({ carregando = false, mensagem = "Carregando..." }) {
+function ModalLoad({ carregando, mensagem}) {
     return (
         <Modal show={carregando} centered size="sm">
             <Modal.Body>

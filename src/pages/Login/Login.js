@@ -7,6 +7,7 @@ import ModalLoad from "../../components/ModalLoad"
 import { useState } from 'react';
 import axios from "axios"
 import { useNavigate } from "react-router-dom"
+import RecSenha from "../../components/recSenha/recSenha"
 
 function Login() {
     const navigate = useNavigate()
@@ -45,10 +46,10 @@ function Login() {
             }
         }).then(function (resposta) {
             const tokenLogin = resposta.data.tokenLogin
-            if(inputsLogin.salvarLogin){
+            if (inputsLogin.salvarLogin) {
                 localStorage.setItem("tokenLogin", tokenLogin)
             }
-            else{
+            else {
                 sessionStorage.setItem("tokenLogin", tokenLogin)
             }
             navigate("/home/principal")
@@ -57,6 +58,11 @@ function Login() {
             toast.error(erro.response.data.message || erro.message || erro.statusText)
             setCarregando(false)
         })
+    }
+    //recuperação de senha
+    const [mostrarModalRecSenha, setMostrarModalRecSenha] = useState(false)
+    function manipularModalRecSenha() {
+        setMostrarModalRecSenha(!mostrarModalRecSenha)
     }
     return (
         <div className="main">
@@ -101,12 +107,12 @@ function Login() {
                                             <form onSubmit={FazerLogin}>
                                                 <div className="form-group">
                                                     <label>Email</label>
-                                                    <input type="email" value={inputsLogin.email} onChange={onChangeInputLoginEmail} className="form-control form-control-sm" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="exemplo@email.com" />
+                                                    <input type="email" required value={inputsLogin.email} onChange={onChangeInputLoginEmail} className="form-control form-control-sm" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="exemplo@email.com" />
                                                     <small id="emailHelp" className="form-text text-muted">Nunca compartilhe essas informações.</small>
                                                 </div>
                                                 <div className="form-group mt-2">
                                                     <label >Senha</label>
-                                                    <input type="password" value={inputsLogin.senha} onChange={onChangeInputLoginSenha} className="form-control form-control-sm" id="exampleInputPassword1" placeholder="*******" />
+                                                    <input type="password" required value={inputsLogin.senha} onChange={onChangeInputLoginSenha} className="form-control form-control-sm" id="exampleInputPassword1" placeholder="*******" />
                                                 </div>
                                                 <div className="form-check mt-2">
                                                     <input type="checkbox" onChange={onChangeInputLoginSalvarLogin} checked={inputsLogin.salvarLogin} className="form-check-input" id="exampleCheck1" />
@@ -116,7 +122,7 @@ function Login() {
                                                 <button type="submit" className="w-75 d-block m-auto btn btn-outline-primary btn-sm">Entrar<i className="bi bi-box-arrow-in-right ms-2"></i></button>
                                                 <br />
                                                 <div className="text-center">
-                                                    <a href="#" className="link-danger text-center">Esqueci minha senha</a>
+                                                    <button type="button" className="text-danger btn text-center border-0" onClick={manipularModalRecSenha}> Esqueci minha senha</button>
                                                 </div>
                                             </form>
                                         </div>
@@ -216,6 +222,7 @@ function Login() {
                 </div>
             </div>
             <ModalLoad carregando={carregando} />
+            <RecSenha mostrar={mostrarModalRecSenha} fecharModal={manipularModalRecSenha} />
             <Footer />
         </div>
     )

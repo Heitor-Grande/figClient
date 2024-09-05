@@ -126,7 +126,7 @@ function CadConta() {
                                 <div className="col-sm col-md-6 col-lg-3">
                                     <div className="form-group">
                                         <label>Senha</label>
-                                        <input type="password" required value={senha} onChange={function (event) {
+                                        <input type="password" minLength={6} required value={senha} onChange={function (event) {
                                             setSenha(event.target.value)
                                         }} className="form-control form-control-sm" placeholder="*******" />
                                     </div>

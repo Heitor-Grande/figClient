@@ -13,18 +13,13 @@ function App() {
         autoClose={2000}
       />
       <BrowserRouter>
-
         <Routes>
           <Route path="/home" element={<MainPage />}>
             <Route path="/home/principal" element={<Principal />} />
           </Route>
-
           <Route path="/" element={<Login />} />
           <Route path="/cad/nova/conta" element={<CadConta />} />
         </Routes>
-
-
-
       </BrowserRouter>
     </>
   )
