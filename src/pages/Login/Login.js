@@ -80,7 +80,6 @@ function Login() {
                             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                                 <li className="nav-item">
                                     <a className="nav-link active rounded text-center" href="/cad/nova/conta"><button className="btn btn-outline-primary btn-sm d-block w-100">Criar uma conta</button></a>
-
                                 </li>
                                 <li className="nav-item">
                                     <a className="nav-link active rounded text-center" href="#infoFIG"><button className="btn btn-outline-secondary btn-sm d-block w-100">Mais sobre o FIG</button></a>
@@ -95,9 +94,7 @@ function Login() {
                 <div className="row">
                     <div className="col-sm col-lg-9 col-md-10 mx-auto">
                         <div className="card">
-
                             <div className="card-body">
-
                                 <div className="container">
                                     <div className="row">
                                         <div className="col text-center">
@@ -133,8 +130,6 @@ function Login() {
                     </div>
                 </div>
             </div>
-
-
             <div className="container mt-5">
                 <div className="row">
                     <div className="col-sm col-lg-9 col-md-10 mx-auto">
@@ -144,14 +139,13 @@ function Login() {
                             </div>
                             <div className="card-body">
                                 <ul>
-                                    <li>fazer recuperação de senha</li>
+                                    <li>Começar tela principal</li>
                                 </ul>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-
             <div className="container mt-5" id="infoFIG">
                 <div className="row">
                     <div className="col-sm col-md col-lg">
@@ -160,7 +154,6 @@ function Login() {
                     </div>
                 </div>
             </div>
-
             <div className="container mt-5">
                 <div className="row">
                     <div className="col-sm col-md col-lg">
@@ -212,7 +205,6 @@ function Login() {
                     </div>
                 </div>
             </div>
-
             <div className="container mt-5">
                 <div className="row">
                     <div className="col-sm col-md col-lg">
