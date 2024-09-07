@@ -34,11 +34,12 @@ function NavBar() {
             </nav>
             <div className="offcanvas offcanvas-start" tabIndex={-1} id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
                 <div className="offcanvas-header border-bottom">
-                    <h5 className="offcanvas-title" id="offcanvasExampleLabel">Menu</h5>
+                    <h5 className="offcanvas-title fs-4" id="offcanvasExampleLabel">Menu</h5>
                     <button type="button" className="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                 </div>
                 <div className="offcanvas-body px-0 pt-0">
                     <a className="rounded-0 btn hoverLink d-block ps-3 fs-5 border-0 link-offset-2 link-underline link-underline-opacity-0" href="/home/principal">Principal</a>
+                    <a className="rounded-0 btn hoverLink d-block ps-3 fs-5 border-0 link-offset-2 link-underline link-underline-opacity-0" href="/home/principal">Minha Conta</a>
                 </div>
             </div>
         </div>
