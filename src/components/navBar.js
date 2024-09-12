@@ -39,7 +39,7 @@ function NavBar() {
                 </div>
                 <div className="offcanvas-body px-0 pt-0">
                     <a className="rounded-0 btn hoverLink d-block ps-3 fs-5 border-0 link-offset-2 link-underline link-underline-opacity-0" href="/home/principal">Principal</a>
-                    <a className="rounded-0 btn hoverLink d-block ps-3 fs-5 border-0 link-offset-2 link-underline link-underline-opacity-0" href="/home/principal">Minha Conta</a>
+                    <a className="rounded-0 btn hoverLink d-block ps-3 fs-5 border-0 link-offset-2 link-underline link-underline-opacity-0" href="/home/minha/conta">Minha Conta</a>
                 </div>
             </div>
         </div>

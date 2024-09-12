@@ -36,6 +36,22 @@ function Login() {
                 toast.error(erro.response.data || erro.message || erro.statusText)
             })
         }
+        //faz login automatico
+        if (localStorage.getItem("tokenLogin")) {
+            setCarregando(true)
+            axios.get(`${process.env.REACT_APP_API_URL}/logar/login/usuario`, {
+                headers: {
+                    Authorization: localStorage.getItem("tokenLogin")
+                }
+            }).then(function (resposta) {
+                sessionStorage.setItem("idUsuario", resposta.data.idUsuario)
+                navigate("/home/principal")
+                setCarregando(false)
+            }).catch(function (erro) {
+                toast.error(erro.response.data.message || erro.message || erro.statusText)
+                setCarregando(false)
+            })
+        }
     }, [])
     function FazerLogin(eventoSubmit) {
         eventoSubmit.preventDefault()
@@ -46,11 +62,14 @@ function Login() {
             }
         }).then(function (resposta) {
             const tokenLogin = resposta.data.tokenLogin
+            const usuario = resposta.data.usuario
             if (inputsLogin.salvarLogin) {
                 localStorage.setItem("tokenLogin", tokenLogin)
+                localStorage.setItem("idUsuario", usuario.id_usuario)
             }
             else {
                 sessionStorage.setItem("tokenLogin", tokenLogin)
+                sessionStorage.setItem("idUsuario", usuario.id_usuario)
             }
             navigate("/home/principal")
             setCarregando(false)
