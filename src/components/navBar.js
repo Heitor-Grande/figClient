@@ -6,6 +6,8 @@ import "../pages/css/style.css"
 import { toast } from "react-toastify"
 import Avatar from '@mui/material/Avatar';
 import Stack from '@mui/material/Stack';
+import Badge from '@mui/material/Badge';
+import MailIcon from '@mui/icons-material/Mail';
 function NavBar() {
     const [showModalCarregando, setShowModalCarregando] = useState(false)
     const navigate = useNavigate()
@@ -63,7 +65,19 @@ function NavBar() {
                     <a className="btn btn-sm border px-3" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample">
                         <i className="bi bi-list fs-2"></i>
                     </a>
-                    
+                    <div className="row">
+                        <div className="col-sm col-md col-lg d-flex">
+                            <Badge badgeContent={4} color="primary">
+                                <MailIcon color="disabled" />
+                            </Badge>
+                            <Stack className="text-center" direction="row" spacing={2}>
+                                <Avatar alt="Remy Sharp"
+                                    src={inputsUsuario.avatar}
+                                    sx={{ width: 50, height: 50 }}
+                                />
+                            </Stack>
+                        </div>
+                    </div>
                 </div>
             </nav>
             <div className="offcanvas offcanvas-start" tabIndex={-1} id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
