@@ -3,6 +3,9 @@ import ModalLoad from "./ModalLoad"
 import axios from 'axios'
 import { useNavigate } from "react-router-dom"
 import "../pages/css/style.css"
+import { toast } from "react-toastify"
+import Avatar from '@mui/material/Avatar';
+import Stack from '@mui/material/Stack';
 function NavBar() {
     const [showModalCarregando, setShowModalCarregando] = useState(false)
     const navigate = useNavigate()
@@ -19,9 +22,39 @@ function NavBar() {
             navigate("/")
         })
     }
+    const [inputsUsuario, setInputsUsuario] = useState({
+        nome: "",
+        avatar: ""
+    })
+    const token = sessionStorage.getItem("tokenLogin") || localStorage.getItem("tokenLogin")
+    function CarregarInformacoesUsuario() {
+        setShowModalCarregando(true)
+        const idUsuario = sessionStorage.getItem("idUsuario") || localStorage.getItem("idUsuario")
+        axios.get(`${process.env.REACT_APP_API_URL}/carregar/usuario/${idUsuario}`, {
+            headers: {
+                Authorization: token
+            }
+        }).then(function (resposta) {
+            const usuario = resposta.data.usuario
+            setInputsUsuario({
+                ...inputsUsuario,
+                nome: usuario.nome,
+                avatar: usuario.avatar
+            })
+            setShowModalCarregando(false)
+        }).catch(function (erro) {
+            toast.error(erro.response.data.message || erro.message)
+            setShowModalCarregando(false)
+        })
+    }
     useEffect(function () {
         VerificaLogin()
+        CarregarInformacoesUsuario()
     }, [])
+    function LogoOff() {
+        sessionStorage.clear()
+        localStorage.clear()
+    }
     return (
         <div className="App">
             <ModalLoad carregando={showModalCarregando} />
@@ -30,6 +63,7 @@ function NavBar() {
                     <a className="btn btn-sm border px-3" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample">
                         <i className="bi bi-list fs-2"></i>
                     </a>
+                    
                 </div>
             </nav>
             <div className="offcanvas offcanvas-start" tabIndex={-1} id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
@@ -38,8 +72,9 @@ function NavBar() {
                     <button type="button" className="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                 </div>
                 <div className="offcanvas-body px-0 pt-0">
-                    <a className="rounded-0 btn hoverLink d-block ps-3 fs-5 border-0 link-offset-2 link-underline link-underline-opacity-0" href="/home/principal">Principal</a>
-                    <a className="rounded-0 btn hoverLink d-block ps-3 fs-5 border-0 link-offset-2 link-underline link-underline-opacity-0" href="/home/minha/conta">Minha Conta</a>
+                    <a className="rounded-0 btn hoverLink d-block ps-3 fs-5 border-0 link-offset-2 link-underline link-underline-opacity-0" href="/home/principal"><i className="bi bi-clipboard2-data me-2"></i>Principal</a>
+                    <a className="rounded-0 btn hoverLink d-block ps-3 fs-5 border-0 link-offset-2 link-underline link-underline-opacity-0" href="/home/minha/conta"><i className="bi bi-person-circle me-2"></i>Minha Conta</a>
+                    <a className="rounded-0 btn hoverLink d-block ps-3 fs-5 border-0 link-offset-2 link-underline link-underline-opacity-0" href="/" onClick={LogoOff}><i className="bi bi-box-arrow-left me-2"></i>Sair</a>
                 </div>
             </div>
         </div>

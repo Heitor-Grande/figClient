@@ -154,11 +154,12 @@ function Login() {
                     <div className="col-sm col-lg-9 col-md-10 mx-auto">
                         <div className="card">
                             <div className="card-header">
-                                Ultimas Anotações 08/06/2024
+                                Ultimas Anotações 12/09/2024
                             </div>
                             <div className="card-body">
                                 <ul>
-                                    <li>Começar tela principal</li>
+                                    <li>Colocar foto do avatar na navbar</li>
+                                    <li>-Fazer o update da minha conta</li>
                                 </ul>
                             </div>
                         </div>

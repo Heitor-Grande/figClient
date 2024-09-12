@@ -46,7 +46,6 @@ function MinhaConta() {
             }
         }).then(function (resposta) {
             const usuario = resposta.data.usuario
-            console.log(usuario)
             setInputsConta({
                 ...inputsConta,
                 nome: usuario.nome,
