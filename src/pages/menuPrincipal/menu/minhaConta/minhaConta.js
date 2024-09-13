@@ -100,7 +100,7 @@ function MinhaConta() {
                             <h4>Minha Conta</h4>
                         </div>
                         <form onSubmit={AtualizarConta}>
-                            <div className="card-body">
+                            <div className="card-body bg-primary">
                                 <div className="container-fluid">
                                     <div className="row">
                                         <div className="col-sm col-md-2 col-lg-2">
