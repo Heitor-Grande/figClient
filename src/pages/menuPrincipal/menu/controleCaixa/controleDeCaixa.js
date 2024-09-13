@@ -1,5 +1,7 @@
 import { useState } from "react"
 import Table from "../../../../components/table/table"
+import Fab from '@mui/material/Fab';
+import AddIcon from '@mui/icons-material/Add';
 function ControleDeCaixa() {
     const [rows, setRows] = useState([])
     const columns = [
@@ -21,6 +23,16 @@ function ControleDeCaixa() {
                             <h4>Controle de Caixa</h4>
                         </div>
                         <div className="card-body">
+                            <div className="container-fluid m-0 p-0">
+                                <div className="row m-0 p-0">
+                                    <div className="col-sm col-md-12 col-lg-12 text-end m-0 p-0">
+                                        <Fab size="small" color="primary" aria-label="add" variant="extended">
+                                            <AddIcon />
+                                            Novo
+                                        </Fab>
+                                    </div>
+                                </div>
+                            </div>
                             <Table
                                 rows={rows}
                                 columns={columns}

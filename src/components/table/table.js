@@ -13,7 +13,7 @@ function Table({
         /*
             [{ field: 'id', headerName: 'ID', width: 70 }]
         */
-        <Paper sx={{ height: 400, width: '100%' }}>
+        <Paper sx={{ height: 400, width: '100%' }} className='mt-3'>
             <DataGrid
                 rows={rows}
                 columns={columns}
