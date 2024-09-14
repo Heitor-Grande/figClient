@@ -9,6 +9,7 @@ import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import GerarBase64 from "../../../../functions/gerarBase64";
+import Button from '@mui/material/Button';
 function MinhaConta() {
     const [inputsConta, setInputsConta] = useState({
         email: "",
@@ -166,8 +167,10 @@ function MinhaConta() {
                                         </div>
                                     </div>
                                     <div className="row">
-                                        <div className="col-sm col-md-6 col-lg-6 text-end">
-                                            <button type="submit" className="btn btn-outline-primary btn-sm mt-4 w-100">Salvar</button>
+                                        <div className="col-sm col-md-6 col-lg-6 text-end mt-2">
+                                            <Button type="submit" sx={{ width: "100%" }} variant="contained" color="primary" size="small">
+                                                Salvar
+                                            </Button>
                                         </div>
                                     </div>
                                 </div>
