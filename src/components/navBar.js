@@ -58,7 +58,7 @@ function NavBar() {
         localStorage.clear()
     }
     return (
-        <div className="App">
+        <div className="App mb-3">
             <ModalLoad carregando={showModalCarregando} />
             <nav className="navbar navbar-expand-lg navbar-light bg-light">
                 <div className="container-fluid">
