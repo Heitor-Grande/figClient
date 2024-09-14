@@ -10,6 +10,7 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import GerarBase64 from "../../../../functions/gerarBase64";
 import Button from '@mui/material/Button';
+import ModeEditIcon from '@mui/icons-material/ModeEdit';
 function MinhaConta() {
     const [inputsConta, setInputsConta] = useState({
         email: "",
@@ -111,8 +112,9 @@ function MinhaConta() {
                                                     sx={{ width: 100, height: 100 }}
                                                 />
                                                 <input className="d-none" onChange={setAvatarConta} type="file" id="imgAvatar" multiple={false} accept=".png, .jpeg, .jpg" />
-                                                <label className="btn border-0" htmlFor="imgAvatar"><i className="bi bi-pencil-square text-primary"></i></label>
-
+                                                <label className="btn border-0" htmlFor="imgAvatar">
+                                                    <ModeEditIcon color="primary" />
+                                                </label>
                                             </Stack>
                                         </div>
                                     </div>

@@ -135,9 +135,13 @@ function FormularioControleCaixa() {
                         <div className="card-body">
                             <form onSubmit={CriarOuAtualizarMovimento}>
                                 <div className="container-fluid">
-                                    <Button hidden={params.acao == "novo" ? true : false} variant="contained" color="error" size="small" startIcon={<DeleteSweepIcon />}>
-                                        Excluir movimento
-                                    </Button>
+                                    <div className="row">
+                                        <div className="col-sm col-md-4 col-lg-3 mb-4" hidden={params.acao == "novo" ? true : false}>
+                                            <Button type="button" sx={{ width: "100%" }} variant="contained" color="error" size="small" startIcon={<DeleteSweepIcon />}>
+                                                Excluir movimento
+                                            </Button>
+                                        </div>
+                                    </div>
                                     <div className="row">
                                         <div className="col-sm col-md-4 col-lg-3">
                                             <InputComponente
