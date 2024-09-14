@@ -3,33 +3,47 @@ import Table from "../../../../components/table/table"
 import axios from "axios"
 import AddIcon from '@mui/icons-material/Add';
 import ModalLoad from "../../../../components/ModalLoad";
+import { toast } from "react-toastify"
+import formatarDinheiro from "../../../../functions/formatarDinheiro";
+import Button from '@mui/material/Button';
+import ControlPointIcon from '@mui/icons-material/ControlPoint';
 function ControleDeCaixa() {
     const [rows, setRows] = useState([])
     const columns = [
         {
-            field: "id",
-            headerName: "ID",
-            width: 20
-        },
-        {
             field: "titulo",
             headerName: "Título",
-            width: 400
+            width: 400,
+            type: "string"
         },
         {
             field: "valor",
             headerName: "Valor",
-            width: 150
+            width: 150,
+            type: "string",
+            cellClassName: function (objColuna) {
+                objColuna.formattedValue = formatarDinheiro.formatarValorFixo(objColuna.formattedValue)
+            }
         },
         {
             field: "datamovimento",
             headerName: "Data do Movimento",
-            width: 150
+            width: 150,
+            type: "Date"
         },
         {
             field: "tipo",
             headerName: "Tipo",
-            width: 100
+            width: 100,
+            type: "string",
+            cellClassName: function (objColuna) {
+                if (objColuna.formattedValue == "S") {
+                    return 'bg-danger text-white text-center'
+                }
+                else if (objColuna.formattedValue == "E") {
+                    return 'bg-success text-white text-center'
+                }
+            }
         }
     ]
     const [showModalLoading, setShowModalLoading] = useState(false)
@@ -45,6 +59,7 @@ function ControleDeCaixa() {
             setRows(resposta.data.movimentos)
             setShowModalLoading(false)
         }).catch(function (erro) {
+            toast.error(erro.response.data.message || erro.message)
             setShowModalLoading(false)
         })
     }
@@ -53,6 +68,9 @@ function ControleDeCaixa() {
     }, [])
     function onRowClick(dados) {
         window.location = `/home/controle/caixa/formulario/${dados.id}/editar`
+    }
+    function CriarNovo() {
+        window.location = '/home/controle/caixa/formulario/0/novo'
     }
     return (
         <div className="container-fluid">
@@ -63,21 +81,15 @@ function ControleDeCaixa() {
                             <h4>Controle de Caixa</h4>
                         </div>
                         <div className="card-body">
-                            <div className="container-fluid m-0 p-0">
-                                <div className="row m-0 p-0">
-                                    <div className="col-sm col-md-12 col-lg-12 text-end m-0 p-0">
-                                        <a href="/home/controle/caixa/formulario/0/novo" className="text-white link-offset-2 link-underline link-underline-opacity-0 bg-primary btn">
-                                            <AddIcon />
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
+                            <Button variant="contained" sx={{ width: "100%" }} onClick={CriarNovo} size="small" startIcon={<ControlPointIcon />}>
+                                Criar novo movimento
+                            </Button>
                             <Table
                                 rows={rows}
                                 columns={columns}
                                 checkboxSelection={false}
                                 pageSize={5}
-                                pageSizeOptions={[5, 10, 15, 20]}
+                                pageSizeOptions={[5, 10, 15]}
                                 onRowClick={onRowClick}
                             />
                         </div>

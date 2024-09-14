@@ -158,8 +158,7 @@ function Login() {
                             </div>
                             <div className="card-body">
                                 <ul>
-                                    <li>Colocar foto do avatar na navbar</li>
-                                    <li>-Fazer o update da minha conta</li>
+                                    <li>Carregar movimento selecioando</li>
                                 </ul>
                             </div>
                         </div>

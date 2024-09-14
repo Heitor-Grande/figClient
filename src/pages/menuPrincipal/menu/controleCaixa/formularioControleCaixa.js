@@ -29,7 +29,7 @@ function FormularioControleCaixa() {
     function setValorMovimento(e) {
         setInputsMovimento({
             ...inputsMovimento,
-            valor: formatarDinheiro(e.target.value)
+            valor: formatarDinheiro.formatarDinheiro(e.target.value)
         })
     }
     function setDataMovimento(e) {
@@ -45,8 +45,7 @@ function FormularioControleCaixa() {
     const [showModalLoading, setShowModalLoading] = useState(false)
     const token = sessionStorage.getItem("tokenLogin") || localStorage.getItem("tokenLogin")
     const idUsuario = sessionStorage.getItem("idUsuario") || localStorage.getItem("idUsuario")
-    function CriarMovimento(e) {
-        e.preventDefault()
+    function CriarMovimento() {
         setShowModalLoading(true)
         const dados = {
             inputsMovimento: inputsMovimento,
@@ -67,12 +66,60 @@ function FormularioControleCaixa() {
             setShowModalLoading(false)
         })
     }
-    function CarregarMovimento(){
-        
+    function CarregarMovimento() {
+        setShowModalLoading(true)
+        axios.get(`${process.env.REACT_APP_API_URL}/carregar/detalhes/movimento/${idUsuario}/${params.id}`, {
+            headers: {
+                Authorization: token
+            }
+        }).then(function (resposta) {
+            const movimento = resposta.data.movimento
+            setInputsMovimento({
+                ...inputsMovimento,
+                titulo: movimento.titulo,
+                tipo: movimento.tipo,
+                valor: formatarDinheiro.formatarValorFixo(movimento.valor),
+                data: movimento.datamovimento.split("T")[0]
+            })
+            setShowModalLoading(false)
+        }).catch(function (erro) {
+            toast.error(erro.response.data.message || erro.message)
+            setShowModalLoading(false)
+        })
+    }
+    function AtualizaMovimento() {
+        setShowModalLoading(true)
+        const dados = {
+            inputsMovimento: inputsMovimento,
+            id_usuario: idUsuario
+        }
+        axios.put(`${process.env.REACT_APP_API_URL}/atualizar/movimento/${idUsuario}o/${params.id}`, dados, {
+            headers: {
+                Authorization: token
+            }
+        }).then(function (resposta) {
+            toast.success(resposta.data.message)
+            setTimeout(() => {
+                window.location = '/home/controle/caixa'
+            }, 2000)
+            setShowModalLoading(false)
+        }).catch(function (erro) {
+            toast.error(erro.response.data.message || erro.message)
+            setShowModalLoading(false)
+        })
+    }
+    function CriarOuAtualizarMovimento(e) {
+        e.preventDefault()
+        if (params.acao == "novo" && params.id == 0) {
+            CriarMovimento()
+        }
+        else if (params.acao == "editar" && params.id != 0) {
+            AtualizaMovimento()
+        }
     }
     useEffect(function () {
         if (params.acao != "novo" && params.id != 0) {
-
+            CarregarMovimento()
         }
     }, [])
     return (
@@ -84,7 +131,7 @@ function FormularioControleCaixa() {
                             <h4>{params.acao == "novo" ? 'Novo movimento' : 'Editar Movimento'}</h4>
                         </div>
                         <div className="card-body">
-                            <form onSubmit={CriarMovimento}>
+                            <form onSubmit={CriarOuAtualizarMovimento}>
                                 <div className="container-fluid">
                                     <div className="row">
                                         <div className="col-sm col-md-4 col-lg-3">
@@ -138,7 +185,7 @@ function FormularioControleCaixa() {
                                             />
                                         </div>
                                         <div className="col-sm col-md-4 col-lg-3 pt-4">
-                                            <button type="submit" className="w-100 btn btn-outline-primary btn-sm">Criar movimento</button>
+                                            <button type="submit" className="w-100 btn btn-outline-primary btn-sm">{params.acao == "novo" ? 'Criar movimento' : 'Salvar Edição'}</button>
                                         </div>
                                     </div>
                                 </div>

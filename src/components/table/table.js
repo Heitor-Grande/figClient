@@ -17,10 +17,26 @@ function Table({
             <DataGrid
                 rows={rows}
                 columns={columns}
-                initialState={{ pagination: { page: 0, pageSize: pageSize } }}
+                initialState={{
+                    pagination: {
+                        paginationModel: {
+                            pageSize: pageSize,
+                        },
+                    },
+                }}
                 checkboxSelection={checkboxSelection}
                 pageSizeOptions={pageSizeOptions}
-                sx={{ border: 0 }}
+                sx={{
+                    border: 0,
+                    // disable cell selection style
+                    '.MuiDataGrid-cell:focus': {
+                        outline: 'none'
+                    },
+                    // pointer cursor on ALL rows
+                    '& .MuiDataGrid-row:hover': {
+                        cursor: 'pointer'
+                    }
+                }}
                 onRowClick={onRowClick}
                 localeText={{
                     // Root
@@ -191,7 +207,10 @@ function Table({
                     collapseDetailPanel: 'Recolher',
 
                     // Used core components translation keys
-                    MuiTablePagination: {},
+                    MuiTablePagination: {
+                        labelRowsPerPage: "Linhas por página",
+                        labelDisplayedRows: ({ page, count }) => `${page + 1} de ${Math.ceil(count / pageSize)}`
+                    },
 
                     // Row reordering text
                     rowReorderingHeaderName: 'Reordenar linhas',
@@ -202,7 +221,7 @@ function Table({
                     aggregationFunctionLabelAvg: 'média',
                     aggregationFunctionLabelMin: 'mínimo',
                     aggregationFunctionLabelMax: 'máximo',
-                    aggregationFunctionLabelSize: 'tamanho',
+                    aggregationFunctionLabelSize: 'tamanho'
                 }}
             />
         </Paper>
