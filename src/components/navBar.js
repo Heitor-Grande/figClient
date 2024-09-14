@@ -57,6 +57,9 @@ function NavBar() {
         sessionStorage.clear()
         localStorage.clear()
     }
+    function minhaConta() {
+        window.location = '/home/minha/conta'
+    }
     return (
         <div className="App mb-3">
             <ModalLoad carregando={showModalCarregando} />
@@ -68,12 +71,13 @@ function NavBar() {
                     <div className="row">
                         <div className="col-sm col-md col-lg d-flex">
                             <Badge badgeContent={4} color="primary">
-                                <MailIcon color="disabled" />
+                                <MailIcon sx={{ cursor: "pointer" }} color="disabled" />
                             </Badge>
-                            <Stack className="text-center" direction="row" spacing={2}>
+                            <Stack sx={{ cursor: "pointer" }} className="text-center" direction="row" spacing={2}>
                                 <Avatar alt="Remy Sharp"
                                     src={inputsUsuario.avatar}
                                     sx={{ width: 50, height: 50 }}
+                                    onClick={minhaConta}
                                 />
                             </Stack>
                         </div>

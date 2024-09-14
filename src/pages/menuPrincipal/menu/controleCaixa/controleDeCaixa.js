@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react"
 import Table from "../../../../components/table/table"
 import axios from "axios"
-import AddIcon from '@mui/icons-material/Add';
 import ModalLoad from "../../../../components/ModalLoad";
 import { toast } from "react-toastify"
 import formatarDinheiro from "../../../../functions/formatarDinheiro";

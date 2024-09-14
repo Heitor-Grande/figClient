@@ -154,11 +154,12 @@ function Login() {
                     <div className="col-sm col-lg-9 col-md-10 mx-auto">
                         <div className="card">
                             <div className="card-header">
-                                Ultimas Anotações 12/09/2024
+                                Próximas Atualizações
                             </div>
                             <div className="card-body">
                                 <ul>
-                                    <li>Carregar movimento selecioando</li>
+                                    <li>Excluir movimentos</li>
+                                    <li>Anexar arquivos ao movimento</li>
                                 </ul>
                             </div>
                         </div>

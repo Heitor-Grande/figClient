@@ -6,6 +6,8 @@ import formatarDinheiro from "../../../../functions/formatarDinheiro"
 import ModalLoad from "../../../../components/ModalLoad"
 import axios from "axios"
 import { toast } from "react-toastify"
+import Button from '@mui/material/Button';
+import DeleteSweepIcon from '@mui/icons-material/DeleteSweep';
 function FormularioControleCaixa() {
     const params = useParams()
     const [inputsMovimento, setInputsMovimento] = useState({
@@ -133,6 +135,9 @@ function FormularioControleCaixa() {
                         <div className="card-body">
                             <form onSubmit={CriarOuAtualizarMovimento}>
                                 <div className="container-fluid">
+                                    <Button hidden={params.acao == "novo" ? true : false} variant="contained" color="error" size="small" startIcon={<DeleteSweepIcon />}>
+                                        Excluir movimento
+                                    </Button>
                                     <div className="row">
                                         <div className="col-sm col-md-4 col-lg-3">
                                             <InputComponente
@@ -185,7 +190,9 @@ function FormularioControleCaixa() {
                                             />
                                         </div>
                                         <div className="col-sm col-md-4 col-lg-3 pt-4">
-                                            <button type="submit" className="w-100 btn btn-outline-primary btn-sm">{params.acao == "novo" ? 'Criar movimento' : 'Salvar Edição'}</button>
+                                            <Button type="submit" sx={{ width: "100%" }} variant="contained" color="primary" size="small">
+                                                {params.acao == "novo" ? 'Criar movimento' : 'Salvar Edição'}
+                                            </Button>
                                         </div>
                                     </div>
                                 </div>
