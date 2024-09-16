@@ -130,7 +130,22 @@ function FormularioControleCaixa() {
         setShowModalConfirmacao(!showModalConfirmacao)
     }
     function ExcluirMovimento() {
-
+        manipularModalExcluir()
+        setShowModalLoading(true)
+        axios.delete(`${process.env.REACT_APP_API_URL}/excluir/movimento/${idUsuario}/${params.id}`, {
+            headers: {
+                Authorization: token
+            }
+        }).then(function (resposta) {
+            toast.success(resposta.data.message)
+            setTimeout(() => {
+                window.location = '/home/controle/caixa'
+            }, 2000);
+            setShowModalLoading(false)
+        }).catch(function (erro) {
+            toast.error(erro.response.data.message || erro.message)
+            setShowModalLoading(false)
+        })
     }
     return (
         <div className="container-fluid">
