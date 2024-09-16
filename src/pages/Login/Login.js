@@ -158,6 +158,7 @@ function Login() {
                             </div>
                             <div className="card-body">
                                 <ul>
+                                    <li>Modal de confirmação</li>
                                     <li>Excluir movimentos</li>
                                     <li>Anexar arquivos ao movimento</li>
                                 </ul>

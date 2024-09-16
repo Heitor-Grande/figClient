@@ -8,6 +8,7 @@ import axios from "axios"
 import { toast } from "react-toastify"
 import Button from '@mui/material/Button';
 import DeleteSweepIcon from '@mui/icons-material/DeleteSweep';
+import ModalConfirmacao from "../../../../components/modalConfirmacao/modalConfirmacao"
 function FormularioControleCaixa() {
     const params = useParams()
     const [inputsMovimento, setInputsMovimento] = useState({
@@ -124,20 +125,29 @@ function FormularioControleCaixa() {
             CarregarMovimento()
         }
     }, [])
+    const [showModalConfirmacao, setShowModalConfirmacao] = useState(false)
+    function manipularModalExcluir() {
+        setShowModalConfirmacao(!showModalConfirmacao)
+    }
+    function ExcluirMovimento() {
+
+    }
     return (
         <div className="container-fluid">
             <div className="row">
+                <div className="col-sm col-md-12 col-12">
+                    <h4>{params.acao == "novo" ? 'Novo movimento' : 'Editar Movimento'}</h4>
+                </div>
+            </div>
+            <div className="row">
                 <div className="col-sm col-md-12 col-lg-12">
                     <div className="card">
-                        <div className="card-header">
-                            <h4>{params.acao == "novo" ? 'Novo movimento' : 'Editar Movimento'}</h4>
-                        </div>
                         <div className="card-body">
                             <form onSubmit={CriarOuAtualizarMovimento}>
                                 <div className="container-fluid">
                                     <div className="row">
                                         <div className="col-sm col-md-4 col-lg-3 mb-4" hidden={params.acao == "novo" ? true : false}>
-                                            <Button type="button" sx={{ width: "100%" }} variant="contained" color="error" size="small" startIcon={<DeleteSweepIcon />}>
+                                            <Button onClick={manipularModalExcluir} type="button" sx={{ width: "100%" }} variant="contained" color="error" size="small" startIcon={<DeleteSweepIcon />}>
                                                 Excluir movimento
                                             </Button>
                                         </div>
@@ -205,6 +215,14 @@ function FormularioControleCaixa() {
                     </div>
                 </div>
             </div>
+            <ModalConfirmacao
+                mostrar={showModalConfirmacao}
+                mensagemPrincipal={"Deseja excluir o movimento?"}
+                labelBtnConfirmar={"Excluir"}
+                labelBtnCancelar={"Cancelar"}
+                acaoBtnConfirmar={ExcluirMovimento}
+                acaoBtnCancelar={manipularModalExcluir}
+            />
             <ModalLoad carregando={showModalLoading} mensagem={"Carregando..."} />
         </div>
     )

@@ -74,11 +74,13 @@ function ControleDeCaixa() {
     return (
         <div className="container-fluid">
             <div className="row">
+                <div className="col-sm col-md-12 col-12">
+                    <h4>Controle de caixa</h4>
+                </div>
+            </div>
+            <div className="row">
                 <div className="col-sm col-md-12 col-lg-12">
                     <div className="card">
-                        <div className="card-header">
-                            <h4>Controle de Caixa</h4>
-                        </div>
                         <div className="card-body">
                             <Button variant="contained" sx={{ width: "100%" }} onClick={CriarNovo} size="small" startIcon={<ControlPointIcon />}>
                                 Criar novo movimento

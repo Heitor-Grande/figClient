@@ -95,12 +95,12 @@ function MinhaConta() {
     return (
         <div className="container-fluid">
             <ModalLoad carregando={showModalCarregando} mensagem={"Carregando conta..."} />
+            <div className="col-sm col-md-12 col-12">
+                <h4>Minha Conta</h4>
+            </div>
             <div className="row">
                 <div className="col-sm col-md-12 col-lg-12">
                     <div className="card">
-                        <div className="card-header">
-                            <h4>Minha Conta</h4>
-                        </div>
                         <form onSubmit={AtualizarConta}>
                             <div className="card-body">
                                 <div className="container-fluid">
