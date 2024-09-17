@@ -194,7 +194,7 @@ function Login() {
                         <div className="row">
                             <div className="col-4">
                                 <div className="list-group" id="list-tab" role="tablist">
-                                    <a className="list-group-item list-group-item-action active" id="list-home-list" data-toggle="list" href="#list-home" role="tab" aria-controls="home">Cadastro de Clientes</a>
+                                    <a className="list-group-item list-group-item-action active" id="list-home-list" data-toggle="list" href="#list-home" role="tab" aria-controls="home">Armazenamento em nuvem</a>
                                     <a className="list-group-item list-group-item-action" id="list-profile-list" data-toggle="list" href="#list-profile" role="tab" aria-controls="profile">Controle de Caixa</a>
                                     <a className="list-group-item list-group-item-action" id="list-settings-list" data-toggle="list" href="#list-settings" role="tab" aria-controls="settings">Controle de Agenda</a>
                                 </div>
@@ -203,12 +203,9 @@ function Login() {
                                 <div className="tab-content" id="nav-tabContent">
                                     <div className="tab-pane fade show active" id="list-home" role="tabpanel" aria-labelledby="list-home-list">
                                         <ul>
-                                            <li>Tenha a sua carteira de clientes.</li>
-                                            <li>Envie notificações personalizadas para os clientes cadastrados.
-                                                Aumente a satisfação e fidelização dos clientes.</li>
-                                            <li>Histórico de interações.</li>
-                                            <li>Recomende produtos ou serviços que sejam mais relevantes para cada cliente.</li>
-                                            <li>Permite obter feedback direto dos clientes sobre produtos e serviços.</li>
+                                            <li>Armazene gratuitamente documentos ou imagens.</li>
+                                            <li>Acesse seus arquivos de forma descomplicada.</li>
+                                            <li>Vincule documentos no seu controle de caixa para facilitar sua organização.</li>
                                         </ul>
                                     </div>
                                     <div className="tab-pane fade" id="list-profile" role="tabpanel" aria-labelledby="list-profile-list">
