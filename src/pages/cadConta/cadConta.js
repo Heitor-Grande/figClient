@@ -6,7 +6,7 @@ import { toast } from "react-toastify"
 import ModalLoad from "../../components/ModalLoad"
 import axios from "axios"
 import { useNavigate } from "react-router-dom"
-
+import Button from '@mui/material/Button';
 function CadConta() {
     const navigate = useNavigate("/")
     const token = sessionStorage.getItem("tokenPublic")
@@ -82,7 +82,11 @@ function CadConta() {
                         <div className="collapse navbar-collapse" id="navbarSupportedContent">
                             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                                 <li className="nav-item">
-                                    <a className="nav-link active rounded text-center" href="/"><button className="btn btn-outline-primary btn-sm d-block w-100">Home</button></a>
+                                    <a className="nav-link active rounded text-center" href="/">
+                                        <Button type="button" variant="contained" color="primary" size="small">
+                                            Home
+                                        </Button>
+                                    </a>
                                 </li>
                             </ul>
                         </div>
@@ -140,13 +144,11 @@ function CadConta() {
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                    <div className="card-footer">
-                        <div className="container">
                             <div className="row">
-                                <div className="col-sm col-md col-lg-6 text-center m-auto">
-                                    <button type="submit" className="btn btn-outline-primary btn-sm w-100">Finalizar Pré-Cadastro</button>
+                                <div className="col-sm col-md-12 col-lg-12 text-center m-auto mt-4">
+                                    <Button type="submit" variant="contained" color="primary" size="small">
+                                        Finalizar Pré-Cadastro
+                                    </Button>
                                 </div>
                             </div>
                         </div>

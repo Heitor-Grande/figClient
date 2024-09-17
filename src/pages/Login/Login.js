@@ -8,7 +8,7 @@ import { useState } from 'react';
 import axios from "axios"
 import { useNavigate } from "react-router-dom"
 import RecSenha from "../../components/recSenha/recSenha"
-
+import Button from '@mui/material/Button';
 function Login() {
     const navigate = useNavigate()
     const [carregando, setCarregando] = useState(false)
@@ -98,10 +98,18 @@ function Login() {
                         <div className="collapse navbar-collapse" id="navbarSupportedContent">
                             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                                 <li className="nav-item">
-                                    <a className="nav-link active rounded text-center" href="/cad/nova/conta"><button className="btn btn-outline-primary btn-sm d-block w-100">Criar uma conta</button></a>
+                                    <a className="nav-link active rounded text-center" href="/cad/nova/conta">
+                                        <Button type="button" variant="contained" color="primary" size="small">
+                                            Criar uma conta
+                                        </Button>
+                                    </a>
                                 </li>
                                 <li className="nav-item">
-                                    <a className="nav-link active rounded text-center" href="#infoFIG"><button className="btn btn-outline-secondary btn-sm d-block w-100">Mais sobre o FIG</button></a>
+                                    <a className="nav-link active rounded text-center" href="#infoFIG">
+                                        <Button type="button" variant="contained" color="inherit" size="small">
+                                            Mais sobre o FIG
+                                        </Button>
+                                    </a>
                                 </li>
                             </ul>
                         </div>
@@ -134,10 +142,12 @@ function Login() {
                                                     <input type="checkbox" onChange={onChangeInputLoginSalvarLogin} checked={inputsLogin.salvarLogin} className="form-check-input" id="exampleCheck1" />
                                                     <label className="form-check-label" >Salvar Login</label>
                                                 </div>
-                                                <br />
-                                                <button type="submit" className="w-75 d-block m-auto btn btn-outline-primary btn-sm">Entrar<i className="bi bi-box-arrow-in-right ms-2"></i></button>
-                                                <br />
-                                                <div className="text-center">
+                                                <div className="form-check mt-2 text-center">
+                                                    <Button type="submit" sx={{ width: "75%" }} variant="contained" color="primary" size="small">
+                                                        Entrar
+                                                    </Button>
+                                                </div>
+                                                <div className="text-center mt-2">
                                                     <button type="button" className="text-danger btn text-center border-0" onClick={manipularModalRecSenha}> Esqueci minha senha</button>
                                                 </div>
                                             </form>
@@ -152,15 +162,15 @@ function Login() {
             <div className="container mt-5">
                 <div className="row">
                     <div className="col-sm col-lg-9 col-md-10 mx-auto">
+                        <h4>Próximas Atualizações</h4>
+                    </div>
+                    <div className="col-sm col-lg-9 col-md-10 mx-auto">
                         <div className="card">
-                            <div className="card-header">
-                                Próximas Atualizações
-                            </div>
                             <div className="card-body">
                                 <ul>
-                                    <li>Modal de confirmação</li>
-                                    <li>Excluir movimentos</li>
                                     <li>Anexar arquivos ao movimento</li>
+                                    <li>Meus arquivos</li>
+                                    <li>graficos de movimento</li>
                                 </ul>
                             </div>
                         </div>
@@ -177,10 +187,9 @@ function Login() {
             </div>
             <div className="container mt-5">
                 <div className="row">
-                    <div className="col-sm col-md col-lg">
+                    <div className="col-sm col-md-12 col-lg-12">
                         <h4 className="text-center">Principais Funcionalidades</h4>
                     </div>
-                    <div className="w-100"></div>
                     <div className="col-sm col-lg-9 col-md-10 mx-auto">
                         <div className="row">
                             <div className="col-4">
