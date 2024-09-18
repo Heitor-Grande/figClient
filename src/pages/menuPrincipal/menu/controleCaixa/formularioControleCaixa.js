@@ -9,6 +9,10 @@ import { toast } from "react-toastify"
 import Button from '@mui/material/Button';
 import DeleteSweepIcon from '@mui/icons-material/DeleteSweep';
 import ModalConfirmacao from "../../../../components/modalConfirmacao/modalConfirmacao"
+import CloudDownloadIcon from '@mui/icons-material/CloudDownload';
+import GerarBase64 from "../../../../functions/gerarBase64"
+import FilePresentIcon from '@mui/icons-material/FilePresent';
+import VisualizarAnexos from "../../../../components/visualizarAnexoComponente/visualizarAnexos"
 function FormularioControleCaixa() {
     const params = useParams()
     const [inputsMovimento, setInputsMovimento] = useState({
@@ -52,7 +56,8 @@ function FormularioControleCaixa() {
         setShowModalLoading(true)
         const dados = {
             inputsMovimento: inputsMovimento,
-            id_usuario: idUsuario
+            id_usuario: idUsuario,
+            arquivosAnexados: arquivosAnexados
         }
         axios.post(`${process.env.REACT_APP_API_URL}/criar/novo/movimento`, dados, {
             headers: {
@@ -77,6 +82,8 @@ function FormularioControleCaixa() {
             }
         }).then(function (resposta) {
             const movimento = resposta.data.movimento
+            const anexos = resposta.data.anexos
+            setArquivosAnexados(anexos)
             setInputsMovimento({
                 ...inputsMovimento,
                 titulo: movimento.titulo,
@@ -96,7 +103,7 @@ function FormularioControleCaixa() {
             inputsMovimento: inputsMovimento,
             id_usuario: idUsuario
         }
-        axios.put(`${process.env.REACT_APP_API_URL}/atualizar/movimento/${idUsuario}o/${params.id}`, dados, {
+        axios.put(`${process.env.REACT_APP_API_URL}/atualizar/movimento/${idUsuario}/${params.id}`, dados, {
             headers: {
                 Authorization: token
             }
@@ -147,6 +154,53 @@ function FormularioControleCaixa() {
             setShowModalLoading(false)
         })
     }
+    const [arquivosAnexados, setArquivosAnexados] = useState([])
+    function AbrirInputFile() {
+        document.querySelector("#anexarArquivo").click()
+    }
+    function importarArquivos(e) {
+        setShowModalLoading(true)
+        const arrayDeFiles = e.target.files
+        if (params.acao == "novo" && params.id == '0') {
+            GerarBase64(arrayDeFiles).then(function (arrayDeFilesEmBase64) {
+                setArquivosAnexados(arrayDeFilesEmBase64)
+                toast.success(arrayDeFilesEmBase64.length + " arquivos vinculado(s) com sucesso.")
+                setShowModalLoading(false)
+            }).catch(function (erro) {
+                toast.error(erro.message || erro)
+                setShowModalLoading(false)
+            })
+        }
+        else if (params.acao == "editar" && params.id != '0') {
+            GerarBase64(arrayDeFiles).then(function (arrayDeFilesEmBase64) {
+                UploadDeArquivo(arrayDeFilesEmBase64)
+            }).catch(function (erro) {
+                toast.error(erro.message || erro)
+                setShowModalLoading(false)
+            })
+        }
+    }
+    const [showModalAnexos, setShowModalAnexos] = useState(false)
+    function manipularModalVisualizarAnexos() {
+        setShowModalAnexos(!showModalAnexos)
+    }
+    function UploadDeArquivo(arrayDeFiles) {
+        const dados = {
+            arquivosAnexados: arrayDeFiles
+        }
+        axios.put(`${process.env.REACT_APP_API_URL}/upload/arquivo/movimento/${params.id}/${idUsuario}`, dados, {
+            headers: {
+                Authorization: token
+            }
+        }).then(function (resposta) {
+            toast.success(resposta.data.message)
+            CarregarMovimento()
+            setShowModalLoading(false)
+        }).catch(function (erro) {
+            toast.error(erro.response.data.message || erro.message)
+            setShowModalLoading(false)
+        })
+    }
     return (
         <div className="container-fluid">
             <div className="row">
@@ -166,6 +220,17 @@ function FormularioControleCaixa() {
                                                 Excluir movimento
                                             </Button>
                                         </div>
+                                        <div className="col-sm col-md-4 col-lg-3 mb-4" >
+                                            <input onChange={importarArquivos} id="anexarArquivo" type="file" className="d-none" multiple />
+                                            <Button onClick={AbrirInputFile} type="button" sx={{ width: "100%" }} variant="contained" color="inherit" size="small" startIcon={<CloudDownloadIcon />}>
+                                                Anexar Arquivo(s)
+                                            </Button>
+                                        </div>
+                                        <div className="col-sm col-md-4 col-lg-3 mb-4" hidden={arquivosAnexados.length > 0 ? false : true}>
+                                            <Button onClick={manipularModalVisualizarAnexos} type="button" sx={{ width: "100%" }} variant="contained" color="inherit" size="small" startIcon={<FilePresentIcon />}>
+                                                Meus Anexos
+                                            </Button>
+                                        </div>
                                     </div>
                                     <div className="row">
                                         <div className="col-sm col-md-4 col-lg-3">
@@ -175,6 +240,7 @@ function FormularioControleCaixa() {
                                                 required={true}
                                                 id={'tituloMovimento'}
                                                 placeholder={'Recebimento de dividendos'}
+                                                className="text-capitalize form-control form-control-sm"
                                                 value={inputsMovimento.titulo}
                                                 onchange={setTituloMovimento}
                                                 readOnly={false}
@@ -239,6 +305,7 @@ function FormularioControleCaixa() {
                 acaoBtnCancelar={manipularModalExcluir}
             />
             <ModalLoad carregando={showModalLoading} mensagem={"Carregando..."} />
+            <VisualizarAnexos mostrar={showModalAnexos} anexos={arquivosAnexados} fecharModal={manipularModalVisualizarAnexos} />
         </div>
     )
 }

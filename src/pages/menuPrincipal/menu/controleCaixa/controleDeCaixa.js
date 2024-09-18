@@ -13,7 +13,10 @@ function ControleDeCaixa() {
             field: "titulo",
             headerName: "Título",
             width: 400,
-            type: "string"
+            type: "string",
+            cellClassName: function () {
+                return 'text-capitalize '
+            }
         },
         {
             field: "valor",
