@@ -168,7 +168,6 @@ function Login() {
                         <div className="card">
                             <div className="card-body">
                                 <ul>
-                                    <li>Anexar arquivos ao movimento</li>
                                     <li>Meus arquivos</li>
                                     <li>graficos de movimento</li>
                                 </ul>

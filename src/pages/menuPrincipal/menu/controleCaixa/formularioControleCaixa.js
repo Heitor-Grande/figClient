@@ -13,6 +13,8 @@ import CloudDownloadIcon from '@mui/icons-material/CloudDownload';
 import GerarBase64 from "../../../../functions/gerarBase64"
 import FilePresentIcon from '@mui/icons-material/FilePresent';
 import VisualizarAnexos from "../../../../components/visualizarAnexoComponente/visualizarAnexos"
+import ModalOpcoes from "../../../../components/modalOpcoes/modalOpcoes"
+import DownloadIcon from '@mui/icons-material/Download';
 function FormularioControleCaixa() {
     const params = useParams()
     const [inputsMovimento, setInputsMovimento] = useState({
@@ -201,6 +203,32 @@ function FormularioControleCaixa() {
             setShowModalLoading(false)
         })
     }
+    //modal de opções
+    const [showModalOpcoes, setShowModalOpcoes] = useState(false)
+    const [opcoes, setOpcoes] = useState([])
+    function mostrarModalOpcoes(dados) {
+        setShowModalOpcoes(!showModalOpcoes)
+        setShowModalAnexos(!showModalAnexos)
+        if (showModalOpcoes == false) {
+            const dadosLinha = dados.row
+            setOpcoes([
+                {
+                    label: "Baixar Anexo",
+                    acao: function () {
+                        //download da imagem
+                        const link = document.createElement("a")
+                        link.href = dadosLinha.filebase64
+                        link.download = dadosLinha.name
+                        document.body.appendChild(link)
+                        link.click()
+                        document.body.removeChild(link)
+                    },
+                    icone: <DownloadIcon />,
+                    color: "inherit"
+                }
+            ])
+        }
+    }
     return (
         <div className="container-fluid">
             <div className="row">
@@ -305,7 +333,14 @@ function FormularioControleCaixa() {
                 acaoBtnCancelar={manipularModalExcluir}
             />
             <ModalLoad carregando={showModalLoading} mensagem={"Carregando..."} />
-            <VisualizarAnexos mostrar={showModalAnexos} anexos={arquivosAnexados} fecharModal={manipularModalVisualizarAnexos} />
+            <VisualizarAnexos mostrar={showModalAnexos} anexos={arquivosAnexados} fecharModal={manipularModalVisualizarAnexos} onRowClick={mostrarModalOpcoes} />
+            <ModalOpcoes
+                titulo={"Opções"}
+                mensagem={""}
+                mostrar={showModalOpcoes}
+                fecharModal={mostrarModalOpcoes}
+                arrayOpcoes={opcoes}
+            />
         </div>
     )
 }
