@@ -206,6 +206,32 @@ function FormularioControleCaixa() {
     //modal de opções
     const [showModalOpcoes, setShowModalOpcoes] = useState(false)
     const [opcoes, setOpcoes] = useState([])
+    function DeletarAnexoDoMovimento(anexo) {
+        if (params.acao == "novo") {
+            const novoArray = arquivosAnexados.filter(function (arquivo) {
+                return arquivo.id != anexo.id
+            })
+            setArquivosAnexados(novoArray)
+            setShowModalOpcoes(false)
+            toast.success("Anexo removido com sucesso.")
+        }
+        else if (params.acao == "editar" && params.id != "0") {
+            setShowModalLoading(true)
+            axios.delete(`${process.env.REACT_APP_API_URL}/deletar/arquivo/movimento/${params.id}/${anexo.id}/${idUsuario}`, {
+                headers: {
+                    Authorization: token
+                }
+            }).then(function (resposta) {
+                toast.success(resposta.data.message)
+                setShowModalOpcoes(false)
+                CarregarMovimento()
+                setShowModalLoading(false)
+            }).catch(function (erro) {
+                toast.error(erro.response.data.message || erro.message)
+                setShowModalLoading(false)
+            })
+        }
+    }
     function mostrarModalOpcoes(dados) {
         setShowModalOpcoes(!showModalOpcoes)
         setShowModalAnexos(!showModalAnexos)
@@ -217,7 +243,7 @@ function FormularioControleCaixa() {
                     acao: function () {
                         //download da imagem
                         const link = document.createElement("a")
-                        link.href = dadosLinha.filebase64
+                        link.href = dadosLinha.filebase64 || dadosLinha.fileBase64
                         link.download = dadosLinha.name
                         document.body.appendChild(link)
                         link.click()
@@ -225,6 +251,14 @@ function FormularioControleCaixa() {
                     },
                     icone: <DownloadIcon />,
                     color: "inherit"
+                },
+                {
+                    label: "Excluir Anexo",
+                    acao: function () {
+                        DeletarAnexoDoMovimento(dadosLinha)
+                    },
+                    icone: <DeleteSweepIcon />,
+                    color: "error"
                 }
             ])
         }
