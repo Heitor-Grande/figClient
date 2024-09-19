@@ -8,6 +8,7 @@ import Principal from "./pages/menuPrincipal/principal";
 import MinhaConta from "./pages/menuPrincipal/menu/minhaConta/minhaConta";
 import ControleDeCaixa from "./pages/menuPrincipal/menu/controleCaixa/controleDeCaixa";
 import FormularioControleCaixa from "./pages/menuPrincipal/menu/controleCaixa/formularioControleCaixa";
+import MeusArquivos from "./pages/menuPrincipal/menu/meusArquivos/meusArquivos";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
             <Route path="/home/principal" element={<Principal />} />
             <Route path="/home/controle/caixa" element={<ControleDeCaixa />} />
             <Route path="/home/controle/caixa/formulario/:id/:acao" element={<FormularioControleCaixa />} />
+            <Route path="/home/meus/arquivos" element={<MeusArquivos />} />
             <Route path="/home/minha/conta" element={<MinhaConta />} />
           </Route>
           <Route path="/" element={<Login />} />
