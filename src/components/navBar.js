@@ -14,7 +14,8 @@ function NavBar() {
     function VerificaLogin() {
         setShowModalCarregando(true)
         const tokenLogin = sessionStorage.getItem("tokenLogin") || localStorage.getItem("tokenLogin")
-        axios.get(`${process.env.REACT_APP_API_URL}/verifica/login/usuario`, {
+        const id_usuario = sessionStorage.getItem("idUsuario") || localStorage.getItem("idUsuario")
+        axios.get(`${process.env.REACT_APP_API_URL}/verifica/login/usuario/${id_usuario}`, {
             headers: {
                 Authorization: tokenLogin
             }
