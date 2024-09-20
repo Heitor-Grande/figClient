@@ -367,7 +367,7 @@ function FormularioControleCaixa() {
                 acaoBtnCancelar={manipularModalExcluir}
             />
             <ModalLoad carregando={showModalLoading} mensagem={"Carregando..."} />
-            <VisualizarAnexos mostrar={showModalAnexos} anexos={arquivosAnexados} fecharModal={manipularModalVisualizarAnexos} onRowClick={mostrarModalOpcoes} />
+            <VisualizarAnexos mostrar={showModalAnexos} modal={true} anexos={arquivosAnexados} fecharModal={manipularModalVisualizarAnexos} onRowClick={mostrarModalOpcoes} />
             <ModalOpcoes
                 titulo={"Opções"}
                 mensagem={""}

@@ -8,7 +8,8 @@ function VisualizarAnexos(
         mostrar,
         onRowClick,
         fecharModal,
-        anexos
+        anexos,
+        modal
     }
 ) {
     const columns = [
@@ -44,11 +45,24 @@ function VisualizarAnexos(
     ]
 
     return (
-        <Modal show={mostrar} size="xl" centered onHide={fecharModal}>
-            <Modal.Header closeButton>
-                <h4>Anexos do movimento</h4>
-            </Modal.Header>
-            <Modal.Body>
+        <>
+            {modal == true ?
+                <Modal show={mostrar} size="xl" centered onHide={fecharModal}>
+                    <Modal.Header closeButton>
+                        <h4>Anexos do movimento</h4>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <Table
+                            rows={anexos}
+                            columns={columns}
+                            checkboxSelection={false}
+                            pageSize={5}
+                            pageSizeOptions={[5, 10, 15]}
+                            onRowClick={onRowClick}
+                        />
+                    </Modal.Body>
+                </Modal>
+                :
                 <Table
                     rows={anexos}
                     columns={columns}
@@ -57,8 +71,8 @@ function VisualizarAnexos(
                     pageSizeOptions={[5, 10, 15]}
                     onRowClick={onRowClick}
                 />
-            </Modal.Body>
-        </Modal>
+            }
+        </>
     )
 }
 export default VisualizarAnexos
