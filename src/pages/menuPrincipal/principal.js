@@ -3,6 +3,7 @@ import { useEffect, useRef } from "react"
 import InputComponente from "../../../src/components/inputComponent/inputComponente"
 import Button from '@mui/material/Button';
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
+import formatarDinheiro from "../../functions/formatarDinheiro"
 function Principal() {
     const canvasMovimentoResumo = useRef(null) //pego o canvas onde quero add o grafico
     const graficoMovimentoResumo = useRef(null) //pego o 'elemento' html do grafico
@@ -18,22 +19,34 @@ function Principal() {
         //grafico movimento - resumo
         graficoMovimentoResumo.current = new Chart(MovimentoResumo, {
             type: "doughnut",
-
             data: {
                 labels: [
                     'Saída',
                     'Entrada'
                 ],
                 datasets: [{
-                    label: 'Total',
+                    label: '',
                     data: [300, 50],
                     backgroundColor: [
                         'rgb(255, 99, 132)',
                         'rgb(54, 162, 235)'
                     ],
                     hoverOffset: 4,
-                    weight: 0.1
+                    weight: 1,
+
                 }]
+            },
+            options: {
+                plugins: {
+                    tooltip: {
+                        callbacks: {
+                            //acesso a label do grafico e formato ela para dinheiro
+                            label: function (tooltipItem) {
+                                return "R$" + formatarDinheiro.formatarValorFixo(tooltipItem.raw)
+                            }
+                        }
+                    }
+                }
             }
         })
     }, [])
