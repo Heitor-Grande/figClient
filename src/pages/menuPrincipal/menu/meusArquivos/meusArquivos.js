@@ -7,6 +7,9 @@ import ModalLoad from '../../../../components/ModalLoad';
 import GerarBase64 from '../../../../functions/gerarBase64';
 import { toast } from "react-toastify"
 import axios from 'axios';
+import ModalOpcoes from '../../../../components/modalOpcoes/modalOpcoes';
+import DownloadIcon from '@mui/icons-material/Download';
+import DeleteSweepIcon from '@mui/icons-material/DeleteSweep';
 function MeusArquivos() {
     const [rows, setRows] = useState([])
     const columns = [
@@ -53,12 +56,13 @@ function MeusArquivos() {
             const dados = {
                 arquivosImportados: arrayDeFilesEmBase64
             }
-            axios.post(`${process.env.REACT_APP_API_UR}/novo/upload/arquivos/${idUsuario}`, dados, {
+            axios.post(`${process.env.REACT_APP_API_URL}/novo/upload/arquivos/${idUsuario}`, dados, {
                 headers: {
                     Authorization: token
                 }
             }).then(function (resposta) {
                 toast.success(resposta.data.message)
+                carregarArquivos()
                 setShowModalLoading(false)
             }).catch(function (erro) {
                 toast.error(erro.response.data.message || erro.message)
@@ -69,9 +73,72 @@ function MeusArquivos() {
             setShowModalLoading(false)
         })
     }
-    function onRowClick(uploads) {
-
+    function carregarArquivos() {
+        setShowModalLoading(true)
+        axios.get(`${process.env.REACT_APP_API_URL}/carregar/meus/uploads/${idUsuario}`, {
+            headers: {
+                Authorization: token
+            }
+        }).then(function (resposta) {
+            setRows(resposta.data.arquivos)
+            setShowModalLoading(false)
+        }).catch(function (erro) {
+            toast.error(erro.response.data.message || erro.message)
+            setShowModalLoading(false)
+        })
     }
+    const [showModalOpcoes, setShowModalOpcoes] = useState(false)
+    const [opcoes, setOpcoes] = useState([])
+    function manipularModalOpcoes() {
+        setShowModalOpcoes(!showModalOpcoes)
+    }
+    function DeletarArquivo(arquivo) {
+        setShowModalLoading(true)
+        axios.delete(`${process.env.REACT_APP_API_URL}/deletar/arquivo/usuario/${idUsuario}/${arquivo.id}`, {
+            headers: {
+                Authorization: token
+            }
+        }).then(function (resposta) {
+            toast.success(resposta.data.message)
+            carregarArquivos()
+            setShowModalOpcoes(false)
+            setShowModalLoading(false)
+        }).catch(function (erro) {
+            toast.error(erro.response.data.message || erro.message)
+            setShowModalLoading(false)
+        })
+    }
+    function onRowClick(uploads) {
+        const dadosLinha = uploads.row
+        setOpcoes([
+            {
+                label: "Baixar Arquivo",
+                acao: function () {
+                    //download da imagem
+                    const link = document.createElement("a")
+                    link.href = dadosLinha.filebase64 || dadosLinha.fileBase64
+                    link.download = dadosLinha.name
+                    document.body.appendChild(link)
+                    link.click()
+                    document.body.removeChild(link)
+                },
+                icone: <DownloadIcon />,
+                color: "inherit"
+            },
+            {
+                label: "Excluir Arquivo",
+                acao: function () {
+                    DeletarArquivo(dadosLinha)
+                },
+                icone: <DeleteSweepIcon />,
+                color: "error"
+            }
+        ])
+        manipularModalOpcoes()
+    }
+    useEffect(function () {
+        carregarArquivos()
+    }, [])
     return (
         <div className="container-fluid">
             <div className="row">
@@ -92,9 +159,7 @@ function MeusArquivos() {
                                 </Button>
                             </div>
                             <VisualizarAnexos
-                                onRowClick={function () {
-
-                                }}
+                                onRowClick={onRowClick}
                                 anexos={rows}
                                 columns={columns}
                             />
@@ -103,6 +168,12 @@ function MeusArquivos() {
                 </div>
             </div>
             <ModalLoad carregando={showModalLoading} mensagem={"Carregando..."} />
+            <ModalOpcoes
+                titulo={"Opções de Arquivo"}
+                arrayOpcoes={opcoes}
+                mostrar={showModalOpcoes}
+                fecharModal={manipularModalOpcoes}
+            />
         </div>
     )
 }

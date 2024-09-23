@@ -22,7 +22,7 @@ function ModalOpcoes({
                     <div className="row justify-content-center">
                         {
                             arrayOpcoes.map(function (opcao, index) {
-                                return <div className="col-sm col-md-4 col-lg-4" key={index}>
+                                return <div className="col-sm col-md-4 col-lg-4 mt-2" key={index}>
                                     <Button type="button" sx={{ width: "100%" }} variant="contained" color={opcao.color} size="small" startIcon={opcao.icone} onClick={opcao.acao}>
                                         {opcao.label}
                                     </Button>
