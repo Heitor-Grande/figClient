@@ -1,16 +1,31 @@
 import Chart from 'chart.js/auto';
-import { useEffect, useRef } from "react"
+import { useEffect, useRef, useState } from "react"
 import InputComponente from "../../../src/components/inputComponent/inputComponente"
 import Button from '@mui/material/Button';
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
 import formatarDinheiro from "../../functions/formatarDinheiro"
+import ModalLoad from '../../components/ModalLoad';
+import axios from "axios"
+import { toast } from 'react-toastify';
 function Principal() {
     const canvasMovimentoResumo = useRef(null) //pego o canvas onde quero add o grafico
     const graficoMovimentoResumo = useRef(null) //pego o 'elemento' html do grafico
-    function CarregarGraficos(e) {
-        e.preventDefault()
+    const token = sessionStorage.getItem("tokenLogin") || localStorage.getItem("tokenLogin")
+    const idUsuario = sessionStorage.getItem("idUsuario") || localStorage.getItem("idUsuario")
+    const [showModalLoading, setShowModalLoading] = useState(false)
+    const [dataInicio, setDataInicio] = useState(new Date(new Date().getFullYear(), new Date().getMonth(), 1).toISOString().split('T')[0])//seta no primeiro dia do mes corrente
+    function SetValorDataInico(e) {
+        setDataInicio(e.target.value)
     }
-    useEffect(function () {
+    const [dataFim, setDataFim] = useState(new Date().toLocaleDateString('pt-BR', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit'
+    }).split('/').reverse().join('-'))//fica no dia da data corrente -> usando apenas toISOSString da ruim por causa do fuso
+    function SetValorDataFim(e) {
+        setDataFim(e.target.value)
+    }
+    function montarGraficoMovimentosResumido(totalEntrada, totalSaida) {
         const MovimentoResumo = canvasMovimentoResumo.current
         //se grafico ja existir eu deleto ele
         if (graficoMovimentoResumo.current) {
@@ -26,7 +41,7 @@ function Principal() {
                 ],
                 datasets: [{
                     label: '',
-                    data: [300, 50],
+                    data: [totalSaida, totalEntrada],
                     backgroundColor: [
                         'rgb(255, 99, 132)',
                         'rgb(54, 162, 235)'
@@ -49,13 +64,35 @@ function Principal() {
                 }
             }
         })
+    }
+    function CarregarGraficos() {
+        setShowModalLoading(true)
+        const dados = {
+            dataInicio: dataInicio,
+            dataFim: dataFim
+        }
+        axios.post(`${process.env.REACT_APP_API_URL}/carregar/dashboard/principal/${idUsuario}`, dados, {
+            headers: {
+                Authorization: token
+            }
+        }).then(function (resposta) {
+            const dados = resposta.data.dados
+            montarGraficoMovimentosResumido(dados.movimentoResumido.totalentrada, dados.movimentoResumido.totalsaida)
+            setShowModalLoading(false)
+        }).catch(function (erro) {
+            toast.error(erro.response.data.message || erro.message)
+            setShowModalLoading(false)
+        })
+    }
+    useEffect(function () {
+        CarregarGraficos()
     }, [])
     return (
         <div className="container-fluid">
             <div className="row">
                 <div className="col-sm col-md-12 col-lg-12  ">
                     <div className="col-sm col-md-12 col-12">
-                        <h4>Dashboards</h4>
+                        <h4>Dashboard</h4>
                     </div>
                 </div>
             </div>
@@ -64,7 +101,10 @@ function Principal() {
                     <div className="card">
                         <div className="card-body">
                             <div className="container-fluid">
-                                <form onSubmit={CarregarGraficos}>
+                                <form onSubmit={function (e) {
+                                    e.preventDefault()
+                                    CarregarGraficos()
+                                }}>
                                     <div className='row'>
                                         <div className='col-sm col-md-12 pe-1 col-lg-2 p-0'>
                                             <InputComponente
@@ -74,10 +114,8 @@ function Principal() {
                                                 className={'form-control form-control-sm'}
                                                 id={"DataInicio"}
                                                 placeholder={"Data de filtro inicial"}
-                                                value={""}
-                                                onchange={function () {
-
-                                                }}
+                                                value={dataInicio}
+                                                onchange={SetValorDataInico}
                                                 readOnly={false}
                                             />
                                         </div>
@@ -89,10 +127,8 @@ function Principal() {
                                                 className={'form-control form-control-sm'}
                                                 id={"DataInicio"}
                                                 placeholder={"Data de filtro inicial"}
-                                                value={""}
-                                                onchange={function () {
-
-                                                }}
+                                                value={dataFim}
+                                                onchange={SetValorDataFim}
                                                 readOnly={false}
                                             />
                                         </div>
@@ -113,8 +149,11 @@ function Principal() {
                     </div>
                 </div>
             </div>
+            <ModalLoad
+                carregando={showModalLoading}
+                mensagem={"Carregando..."}
+            />
         </div>
-
     )
 }
 export default Principal

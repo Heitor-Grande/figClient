@@ -168,8 +168,8 @@ function Login() {
                         <div className="card">
                             <div className="card-body">
                                 <ul>
-                                    <li>Meus arquivos</li>
-                                    <li>graficos de movimento</li>
+                                    <li>Agendamentos</li>
+                                    <li>Envio de notificações</li>
                                 </ul>
                             </div>
                         </div>
