@@ -137,7 +137,7 @@ function CadConta() {
                                 </div>
                                 <div className="col-sm col-md-6 col-lg-3">
                                     <div className="form-group">
-                                        <label>Senha</label>
+                                        <label>Confirmar Senha</label>
                                         <input type="password" required value={senhaConfirmar} onChange={function (event) {
                                             setSenhaConfirmar(event.target.value)
                                         }} className="form-control form-control-sm" placeholder="*******" />

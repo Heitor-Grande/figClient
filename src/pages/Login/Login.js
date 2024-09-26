@@ -179,8 +179,9 @@ function Login() {
             <div className="container mt-5" id="infoFIG">
                 <div className="row">
                     <div className="col-sm col-md col-lg">
-                        <p className="text-center">O FIG foi planejado para simplificar e otimizar a gestão de tarefas tanto para negócios quanto para a vida pessoal. Com ferramentas essenciais para o cadastro de clientes, controle de caixa e organização de agendas, ele oferece uma interface intuitiva e funcionalidades avançadas que aumentam a eficiência,
-                            melhoram a satisfação dos clientes e promovem um equilíbrio saudável entre vida pessoal e profissional.</p>
+                        <p className="text-center">O FIG foi planejado para simplificar e otimizar a gestão de tarefas da sua vida pessoal. 
+                            Com ferramentas essenciais, controle de caixa, armazenamento em nuvem e 
+                            organização de agendas, ele oferece uma interface intuitiva e funcionalidades para facilitar a sua rotina e compromissos.</p>
                     </div>
                 </div>
             </div>
