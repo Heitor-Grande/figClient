@@ -50,10 +50,6 @@ function NavBar() {
             setShowModalCarregando(false)
         })
     }
-    useEffect(function () {
-        VerificaLogin()
-        CarregarInformacoesUsuario()
-    }, [])
     function LogoOff() {
         sessionStorage.clear()
         localStorage.clear()
@@ -61,6 +57,49 @@ function NavBar() {
     function minhaConta() {
         window.location = '/home/minha/conta'
     }
+    useEffect(function () {
+        VerificaLogin()
+        CarregarInformacoesUsuario()
+    }, [])
+    // Estado para armazenar o evento beforeinstallprompt
+    const [installPromptEvent, setInstallPromptEvent] = useState(null)
+    // Estado para controlar se o botão de instalar deve aparecer
+    const [isInstallable, setIsInstallable] = useState(false)
+    useEffect(() => {
+        // Escuta o evento beforeinstallprompt
+        const handleBeforeInstallPrompt = (event) => {
+            // Previne o prompt padrão de instalação
+            event.preventDefault();
+            // Armazena o evento para ser disparado posteriormente
+            setInstallPromptEvent(event);
+            // Mostra o botão de instalação
+            setIsInstallable(true);
+        };
+
+        window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+
+        return () => {
+            window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+        };
+    }, []);
+    const handleInstallClick = () => {
+        if (installPromptEvent) {
+            // Dispara o prompt de instalação
+            installPromptEvent.prompt();
+
+            // Verifica a escolha do usuário
+            installPromptEvent.userChoice.then((choiceResult) => {
+                if (choiceResult.outcome === 'accepted') {
+                    console.log('Usuário aceitou a instalação');
+                } else {
+                    console.log('Usuário recusou a instalação');
+                }
+                // Reseta o evento após a escolha
+                setInstallPromptEvent(null);
+                setIsInstallable(false);
+            });
+        }
+    };
     return (
         <div className="App mb-3">
             <ModalLoad carregando={showModalCarregando} />
@@ -95,7 +134,9 @@ function NavBar() {
                     <a className="rounded-0 btn hoverLink d-block ps-3 fs-5 border-0 link-offset-2 link-underline link-underline-opacity-0" href="/home/controle/caixa"><i className="bi bi-coin me-2"></i>Controle de Caixa</a>
                     <a className="rounded-0 btn hoverLink d-block ps-3 fs-5 border-0 link-offset-2 link-underline link-underline-opacity-0" href="/home/meus/arquivos"><i className="bi bi-folder-fill me-2"></i>Meus Arquivos</a>
                     <a className="rounded-0 btn hoverLink d-block ps-3 fs-5 border-0 link-offset-2 link-underline link-underline-opacity-0" href="/home/minha/conta"><i className="bi bi-person-circle me-2"></i>Minha Conta</a>
+                    <hr />
                     <a className="rounded-0 btn hoverLink d-block ps-3 fs-5 border-0 link-offset-2 link-underline link-underline-opacity-0" href="/" onClick={LogoOff}><i className="bi bi-box-arrow-left me-2"></i>Sair</a>
+                    <button className="w-100 text-center rounded-0 btn hoverLink d-block ps-3 fs-5 border-0 link-offset-2 link-underline link-underline-opacity-0" href="/" hidden={!isInstallable} onClick={handleInstallClick}><i className="bi bi-file-arrow-down me-2"></i>Instalar APP</button>
                 </div>
             </div>
         </div>
