@@ -197,7 +197,6 @@ function FormularioControleCaixa() {
         }).then(function (resposta) {
             toast.success(resposta.data.message)
             CarregarMovimento()
-            setShowModalLoading(false)
         }).catch(function (erro) {
             toast.error(erro.response.data.message || erro.message)
             setShowModalLoading(false)
