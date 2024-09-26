@@ -63,7 +63,6 @@ function MeusArquivos() {
             }).then(function (resposta) {
                 toast.success(resposta.data.message)
                 carregarArquivos()
-                setShowModalLoading(false)
             }).catch(function (erro) {
                 toast.error(erro.response.data.message || erro.message)
                 setShowModalLoading(false)
