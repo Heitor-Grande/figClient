@@ -6,7 +6,7 @@ function Table({
     checkboxSelection,//true ou false para mostrar checkbox
     pageSize,//linhas por pagina na tabela
     pageSizeOptions,//opções de qtde de linhas por pagina
-    onRowClick
+    onRowClick //indica se a linha aceita ser clicavel (true or false)
 }) {
     return (
         //exemplo de como deve vir colunms:
